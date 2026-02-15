@@ -1,0 +1,86 @@
+[[ -f ~/.zshenv ]] && source ~/.zshenv
+[[ $- == *i* ]] || exit
+
+export LANG=C.UTF-8
+
+alias grep='grep --color=auto'
+alias ls='ls --color=auto'
+alias la='ls -la'
+alias l='ls -lt'
+alias s='ls'
+alias gs='git status'
+alias ga='git add --all'
+alias gad='git add'
+alias gc='git commit -m'
+alias gco='git checkout'
+alias gcm='git commit'
+alias gca='git commit --amend'
+alias gq='git pull'
+alias gk='git reset'
+alias gkh='git reset --hard'
+alias gkha='git reset --hard HEAD^'
+alias gp='git push'
+alias gg='git switch'
+alias ggo='git switch -c'
+alias grs='git restore --staged'
+alias grc='git rm --cached'
+alias gr='git restore'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gda='git diff HEAD^'
+alias gm='git merge'
+alias gl='git log'
+alias gll='git log --graph --oneline --decorate'
+alias gt='git stash'
+alias gtp='git stash pop'
+alias gcl='git clone'
+alias gcl1='git clone --depth=1'
+alias gsmu='git submodule update --init --recursive'
+alias g='git'
+alias p='python'
+alias b='nvim'
+alias oc='opencode'
+alias os='openspec'
+alias sup='sudo pacman'
+alias h='history | tail'
+
+function extract {
+  if [ -z "$1" ]; then
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+  else
+    if [ -f $1 ]; then
+      case $1 in
+        *.tar.bz2)   tar xvjf $1    ;;
+        *.tar.gz)    tar xvzf $1    ;;
+        *.tar.xz)    tar xvJf $1    ;;
+        *.lzma)      unlzma $1      ;;
+        *.bz2)       bunzip2 $1     ;;
+        *.rar)       unrar x -ad $1 ;;
+        *.gz)        gunzip $1      ;;
+        *.tar)       tar xvf $1     ;;
+        *.tbz2)      tar xvjf $1    ;;
+        *.tgz)       tar xvzf $1    ;;
+        *.zip)       unzip $1       ;;
+        *.Z)         uncompress $1  ;;
+        *.7z)        7z x $1        ;;
+        *.xz)        unxz $1        ;;
+        *.exe)       cabextract $1  ;;
+        *)           echo "extract: '$1' - unknown archive method" ;;
+      esac
+    else
+      echo "$1 - file does not exist"
+    fi
+  fi
+}
+
+function abspath() {
+    if [ -d "$1" ]; then
+        echo "$(cd $1; pwd)"
+    elif [ -f "$1" ]; then
+        if [[ $1 == */* ]]; then
+            echo "$(cd ${1%/*}; pwd)/${1##*/}"
+        else
+            echo "$(pwd)/$1"
+        fi
+    fi
+}

@@ -1,0 +1,37 @@
+# set editing-mode vi
+# $if mode=vi
+# set keymap vi-command
+# K: history-search-backward
+# J: history-search-forward
+# H: beginning-of-line
+# L: end-of-line
+# "\C-r": vi-redo
+# set keymap vi-insert
+# # these are for vi-insert mode
+# Tab: complete
+# "\e[Z": "**\t"
+# "\C-l": clear-screen
+# "\M-[A": previous-history
+# "\M-[B": next-history
+# "\M-[D": backward-char
+# "\M-[C": forward-char
+# "\C-a": beginning-of-line
+# "\C-e": end-of-line
+# "\C-k": kill-line
+# "\C-u": backward-kill-line
+# "\C-q": kill-word
+# "\C-w": backward-kill-word
+# "\C-p": history-search-backward
+# "\C-n": history-search-forward
+# "\C-b": backward-word
+# "\C-f": forward-word
+# $endif
+# set completion-ignore-case on
+# set show-mode-in-prompt on
+# set vi-ins-mode-string \1\e[6 q\2
+# set vi-cmd-mode-string \1\e[2 q\2
+# set keyseq-timeout 10
+# set match-hidden-files off
+# set bell-style visible
+# set colored-completion-prefix on
+# set show-all-if-unmodified on

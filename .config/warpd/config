@@ -1,0 +1,37 @@
+indicator: bottomright
+indicator_color: #9ece6a
+indicator_size: 22
+
+cursor_color: #7aa2f7
+cursor_size: 22
+
+hint_chars: abcdefghijklmnopqrstuvwxyz
+hint_font: JetBrainsMono Nerd Font
+hint_border_radius: 5
+hint_size: 20
+
+grid_color: #1a1b26
+grid_border_color: #a9b1d6
+grid_size: 2
+grid_border_size: 3
+hint_bgcolor: #1a1b26
+hint_fgcolor: #9ece6a
+
+accelerator_acceleration: 10000
+acceleration: 1000
+speed: 220
+max_speed: 3400
+decelerator_speed: 150
+
+scroll_speed: 300
+scroll_max_speed: 3000
+scroll_acceleration: 900
+scroll_deceleration: -3000
+
+exit: esc M-;
+hint_exit: esc M-;
+
+repeat_interval: 220
+
+buttons: m , .
+oneshot_buttons: space b n

@@ -1,0 +1,27 @@
+indicator: bottomright
+indicator_color: #ffffff
+indicator_size: 22
+
+cursor_color: #ff8800
+cursor_size: 22
+
+hint_chars: abcdefghijklmnopqrstuvwxyz
+hint_font: JetBrainsMono Nerd Font
+hint_border_radius: 5
+hint_size: 20
+
+grid_color: #1c1c1e
+grid_border_color: #1c1c1e
+grid_size: 2
+grid_border_size: 3
+hint_bgcolor: #1c1c1e
+hint_fgcolor: #a1aba7
+
+acceleration: 2500
+speed: 200
+max_speed: 3000
+
+scroll_speed: 200
+scroll_max_speed: 8000
+scroll_acceleration: 1500
+scroll_deceleration: -3500

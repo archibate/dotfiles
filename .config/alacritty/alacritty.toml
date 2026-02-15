@@ -1,0 +1,11 @@
+[general]
+import = [
+    "~/.config/alacritty/themes/tokyo_night.toml"
+]
+
+[window]
+opacity = 0.6
+blur = true
+
+[font]
+normal = { family = "JetBrainsMono Nerd Font Mono", style = "Medium" }

@@ -1,0 +1,7 @@
+set $mod Mod4
+
+include bindings
+include roles
+include appearances
+include autostart
+include gaps
