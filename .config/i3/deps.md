@@ -11,6 +11,7 @@ sudo pacman -S adwaita-icon-theme adwaita-cursor
 sudo pacman -S fcitx5 fcitx5-configtool fcitx5-rime
 sudo pacman -S pipewire
 sudo pacman -S mplayer vlc
+sudo pacman -S mpv mpv-mpris
 sudo pacman -S playerctl
 sudo pacman -S picom
 sudo pacman -S nerd-fonts
