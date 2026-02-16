@@ -1,0 +1,7 @@
+[user]
+	email = 1931127624@qq.com
+	name = archibate
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main

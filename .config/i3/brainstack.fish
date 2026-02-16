@@ -35,7 +35,7 @@ function show_menu
     set text (echo $entry | cut -f2)
     set shot_path (echo $entry | cut -f3)
 
-    set action (printf "Open Screenshot\nDelete Entry\nCopy Text\nAsk AI\nSearch in Web\n" | rofi -dmenu -i -p action)
+    set action (printf "Open Screenshot\nOpen in Editor\nDelete Entry\nCopy Text\nAsk AI\nSearch in Web\n" | rofi -dmenu -i -p action)
     
     switch $action
         case "Open Screenshot"
@@ -49,6 +49,10 @@ function show_menu
         case "Copy Text"
             echo -n $text | xclip -selection clipboard
             notify-send "brainstack" "Text copied: $text"
+        case "Open in Editor"
+            set total_lines (wc -l <$log_file)
+            set target_line (math $total_lines - $selected)
+            $TERMINAL $EDITOR +$target_line $log_file
         case "Ask AI"
             set output (ask "make a short answer on user question: $text" <&- | tee /tmp/answer.md)
             notify-send "brainstack" $output

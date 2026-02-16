@@ -1,0 +1,6 @@
+[submodule ".config/tmux"]
+	path = .config/tmux
+	url = git@github.com:archibate/dotfiles-tmux
+[submodule ".config/nvim"]
+	path = .config/nvim
+	url = git@github.com:archibate/dotfiles-nvim

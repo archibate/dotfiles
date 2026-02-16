@@ -28,7 +28,9 @@ sudo pacman -S dunst
 sudo pacman -S lazygit tig
 sudo pacman -S bat fzf ripgrep
 sudo pacman -S fd bat exa
-sudo pacman -S python python-pip uv
+sudo pacman -S python python-pip
+sudo pacman -S uv python-uv
+sudo pacman -S ruff stylua
 sudo pacman -S nodejs npm
 sudo pacman -S neovim python-pynvim
 sudo pacman -S direnv
