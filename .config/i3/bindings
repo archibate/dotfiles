@@ -51,7 +51,7 @@ bindsym $mod+q kill
 # bindsym $mod+space exec --no-startup-id rofi -show combi -run-command "i3-msg exec '{cmd}'" -show-icons
 bindsym $mod+space exec --no-startup-id "rofi -show drun"
 bindsym $mod+shift+space exec --no-startup-id "rofi -show run"
-bindsym $mod+shift+w exec --no-startup-id "rofi -show window"
+bindsym $mod+f exec --no-startup-id "rofi -show window"
 bindsym $mod+shift+f exec --no-startup-id "rofi -show filebrowser"
 
 # change focus
@@ -85,7 +85,7 @@ bindsym $mod+s split v
 bindsym $mod+shift+s split h
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym $mod+z fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+a layout stacking
@@ -165,7 +165,7 @@ bindsym $mod+Shift+a exec "lxappearance"
 bindsym $mod+Shift+x exec "xfce4-settings-manager"
 bindsym $mod+Shift+t exec "xfce4-taskmanager"
 
-bindsym $mod+n exec --no-startup-id ~/.config/i3/brainstack.fish
+bindsym $mod+n exec --no-startup-id ~/.config/i3/countup rofi
 bindsym $mod+p exec --no-startup-id ~/.config/i3/brainstack.fish menu
 bindsym $mod+y exec --no-startup-id ~/.config/i3/quickask.fish
 

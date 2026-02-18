@@ -29,6 +29,7 @@ sudo pacman -S lazygit tig
 sudo pacman -S bat fzf ripgrep
 sudo pacman -S fd bat exa
 sudo pacman -S python python-pip
+sudo pacman -S py3status
 sudo pacman -S uv python-uv
 sudo pacman -S ruff stylua
 sudo pacman -S nodejs npm

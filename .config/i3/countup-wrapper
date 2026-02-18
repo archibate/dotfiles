@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+"""
+Countup i3status wrapper script
+
+This script outputs timer status in i3bar JSON format.
+Can be used with i3blocks, i3status, or standalone.
+
+Usage:
+    ./countup-wrapper           # Output JSON status
+    ./countup-wrapper --click   # Handle click event (calls rofi)
+
+i3bar JSON format:
+    {"full_text": "...", "short_text": "...", "color": "...", "name": "countup"}
+
+Click handling (via environment variables):
+    BLOCK_BUTTON=1  # Left click - open rofi menu
+    BLOCK_BUTTON=3  # Right click - toggle timer visibility
+"""
+
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+# Path to countup script (relative to this wrapper or in PATH)
+SCRIPT_DIR = Path(__file__).parent.resolve()
+COUNTUP_PATH = SCRIPT_DIR.parent.parent / "countup"
+
+
+def get_countup_status():
+    """Get timer status from countup command."""
+    try:
+        result = subprocess.run(
+            [str(COUNTUP_PATH), "status", "--json"],
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+        if result.returncode == 0:
+            return json.loads(result.stdout.strip())
+    except (subprocess.TimeoutExpired, json.JSONDecodeError, FileNotFoundError) as e:
+        pass
+    
+    # Fallback: try countup from PATH
+    try:
+        result = subprocess.run(
+            ["countup", "status", "--json"],
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+        if result.returncode == 0:
+            return json.loads(result.stdout.strip())
+    except (subprocess.TimeoutExpired, json.JSONDecodeError, FileNotFoundError):
+        pass
+    
+    return {"text": "error", "tooltip": "Countup not available"}
+
+
+def handle_click():
+    """Handle click events from i3bar/i3blocks."""
+    button = os.environ.get("BLOCK_BUTTON", "0")
+    
+    if button == "1":  # Left click - open rofi menu
+        try:
+            subprocess.run([str(COUNTUP_PATH), "rofi"])
+        except FileNotFoundError:
+            # Fallback to PATH
+            subprocess.run(["countup", "rofi"])
+    elif button == "3":  # Right click - could be used for other actions
+        # Future: could show quick menu or reset
+        pass
+
+
+def main():
+    # Check for click handling mode
+    if "--click" in sys.argv:
+        handle_click()
+        return
+    
+    # Check if called by i3blocks with click event
+    if os.environ.get("BLOCK_BUTTON"):
+        handle_click()
+    
+    # Get status from countup
+    status = get_countup_status()
+    
+    # Format for i3bar
+    output = {
+        "full_text": f" {status.get('text', 'none')} ",
+        "short_text": status.get("text", "none"),
+        "name": "countup",
+        "instance": "timer",
+        "tooltip": status.get("tooltip", "No timer"),
+        "_countup_text": status.get("text", "none"),
+    }
+    
+    # Set color based on status
+    text = status.get("text", "")
+    if text == "none":
+        output["color"] = "#888888"  # Gray for no timer
+        output["full_text"] = " --:--:-- "
+    elif text == "error":
+        output["color"] = "#ff0000"  # Red for error
+    else:
+        output["color"] = "#00ff00"  # Green for active timer
+    
+    print(json.dumps(output))
+    sys.stdout.flush()
+
+
+if __name__ == "__main__":
+    main()

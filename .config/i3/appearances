@@ -53,7 +53,7 @@ client.background        $base
 # bar
 bar {
     position bottom
-    status_command i3status
+    status_command py3status || i3status
     colors {
         background         $base
         statusline         $text
