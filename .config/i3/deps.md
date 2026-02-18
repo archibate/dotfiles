@@ -43,14 +43,16 @@ paru -S nitrogen
 paru -S nvimpager
 paru -S projectdo
 paru -S oscclip
+paru -S ttf-seto
+paru -S rofi-themes-collection
 
 # https://github.com/Reverier-Xu/Ori-fcitx5
 paru -S fcitx5-skin-ori-git
-
 # https://github.com/Reverier-Xu/Fluent-fcitx5
 paru -S fcitx5-skin-fluentdark-git
 paru -S fcitx5-skin-fluentlight-git
-
+# then switch them in:
+fcitx5-configtool
 
 # https://wiki.archlinux.org/title/GTK#Dark_theme_variant
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
@@ -66,5 +68,5 @@ cp -r /tmp/rofi-themes-collection/themes/templates ~/.local/share/rofi/themes/
 # mkdir -p ~/.config/alacritty/themes
 # cp -r /tmp/alacritty-theme/themes/*.toml ~/.config/alacritty/themes
 
-# fonts: https://github.com/lxgw/kose-font/releases
+# other fonts: https://github.com/lxgw/kose-font/releases
 ```
