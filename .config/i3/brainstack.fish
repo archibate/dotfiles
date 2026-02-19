@@ -10,6 +10,11 @@ function add_entry
     printf "%s\t%s\t%s\n" $date_time $text $shot_path >>$log_file
 end
 
+function show_add
+    set text (echo -n | rofi -dmenu -p brainstack | tr '\t' ' ' | string trim)
+    insert_entry "$text"
+end
+
 function show_menu
     if not test -f $log_file
         notify-send "brainstack" "No entries found"
@@ -31,7 +36,7 @@ function show_menu
     end
 
     set entry (printf "%s\n" $entries | sed -n (math $selected + 1)"p")
-    set date_time (echo $entry | cut -f1)
+    # set date_time (echo $entry | cut -f1)
     set text (echo $entry | cut -f2)
     set shot_path (echo $entry | cut -f3)
 
@@ -79,10 +84,9 @@ function main
     if test "$argv[1]" = menu
         show_menu
         return
+    else if test "$argv[1]" = add
+        show_add
     end
-
-    set text (echo -n | rofi -dmenu -p brainstack | tr '\t' ' ' | string trim)
-    insert_entry "$text"
 end
 
 main $argv
