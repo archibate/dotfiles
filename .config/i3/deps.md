@@ -1,6 +1,7 @@
 ```bash
 
 sudo pacman -S i3-wm i3status
+sudo pacman -S sddm
 sudo pacman -S lxappearance
 sudo pacman -S flameshot
 sudo pacman -S feh
@@ -37,6 +38,7 @@ sudo pacman -S neovim python-pynvim
 sudo pacman -S direnv
 sudo pacman -S atuin
 sudo pacman -S zoxide
+sudo pacman -S gum glow
 paru -S i3lock-color
 paru -S warpd
 paru -S nitrogen
@@ -56,12 +58,6 @@ fcitx5-configtool
 
 # https://wiki.archlinux.org/title/GTK#Dark_theme_variant
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-
-# https://github.com/newmanls/rofi-themes-collection
-git clone https://github.com/lr-tech/rofi-themes-collection.git /tmp/rofi-themes-collection
-mkdir -p ~/.local/share/rofi/themes/
-cp /tmp/rofi-themes-collection/themes/*.rasi ~/.local/share/rofi/themes/
-cp -r /tmp/rofi-themes-collection/themes/templates ~/.local/share/rofi/themes/
 
 # https://github.com/alacritty/alacritty-theme
 # git clone https://github.com/alacritty/alacritty-theme /tmp/alacritty-theme
