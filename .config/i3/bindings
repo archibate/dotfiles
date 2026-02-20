@@ -168,6 +168,7 @@ bindsym $mod+Shift+t exec "xfce4-taskmanager"
 bindsym $mod+n exec --no-startup-id ~/.config/i3/countup_timer.py rofi
 bindsym $mod+p exec --no-startup-id ~/.config/i3/brainstack.fish menu
 bindsym $mod+y exec --no-startup-id ~/.config/i3/quickask.fish
+# bindsym Hangul exec --no-startup-id ~/.config/i3/repeat_clicker.py --interval 2 --count 5000 --button left
 
 bindsym $mod+b exec "chromium"
 bindsym $mod+o exec "thunar"
