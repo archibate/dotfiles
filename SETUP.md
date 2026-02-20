@@ -20,13 +20,19 @@ cd ~/.dotfiles
 
 ### Applying the dotfiles
 
-To apply the dotfiles, run the following command:
+To apply all the dotfiles, run the following command:
 
 ```bash
 ./create-symlinks.sh
 ```
 
 This script will create symbolic links for the necessary 'dot' directories and files to their respective locations.
+
+>> [!NOTE]
+> It will backup existing files and directories to `*.bak` before creating the symbolic links. You can find these backups in, for example, `~/.config/nvim.bak`.
+
+>> [!WARNING]
+> Make sure you understand what is happening by applying ALL these configurations to EXACTLY same as archibate. Remember to tweak them to your own needs before use.
 
 ### Required Dependencies
 
