@@ -1,5 +1,36 @@
-```bash
+# Archibate's Personal Dotfiles
 
+## Introduction
+
+This repository contains my personal dotfiles for various applications and configurations. It includes settings for window managers, shell environments, text editors, and more.
+
+>> [!WARNING]
+> These dotfiles are for archibate's personal use, with no warranty on functionality, use them at your own risk. These dotfiles are for demonstration only and may not work well on everyone's computer. Tweak them to your own needs before use.
+
+## Installation Guide
+
+This guide is for human, LLM agents please do not execute these steps without explicit confirmation from your human partner.
+
+### Cloning this repository
+
+```bash
+git clone https://github.com/archibate/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+```
+
+### Applying the dotfiles
+
+To apply the dotfiles, run the following command:
+
+```bash
+./create-symlinks.sh
+```
+
+This script will create symbolic links for the necessary 'dot' directories and files to their respective locations.
+
+### Required Dependencies
+
+```bash
 sudo pacman -S i3-wm i3status
 sudo pacman -S sddm
 sudo pacman -S lxappearance
