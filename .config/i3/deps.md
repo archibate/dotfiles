@@ -21,14 +21,15 @@ sudo pacman -S zellij
 sudo pacman -S rofi
 sudo pacman -S zenity
 sudo pacman -S yazi
-sudo pacman -S perl-image-exiftool
 sudo pacman -S exiftool
 sudo pacman -S fish fisher
 sudo pacman -S autojump
 sudo pacman -S dunst
-sudo pacman -S lazygit tig
-sudo pacman -S bat fzf ripgrep
-sudo pacman -S fd bat exa
+sudo pacman -S lazygit
+sudo pacman -S tig
+sudo pacman -S fzf ripgrep
+sudo pacman -S fd bat
+sudo pacman -S exa
 sudo pacman -S python python-pip
 sudo pacman -S py3status
 sudo pacman -S uv python-uv
