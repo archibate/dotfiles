@@ -23,6 +23,7 @@ cd ~/.dotfiles
 To apply all the dotfiles, run the following command:
 
 ```bash
+git submodule update --init --recursive
 ./create-symlinks.sh
 ```
 
