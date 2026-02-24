@@ -86,6 +86,7 @@ sudo pacman -S cargo
 sudo pacman -S chromium
 sudo pacman -S ncdu
 sudo pacman -S pkgconf
+sudo pacman -S netcat lsof
 
 cargo install paru
 

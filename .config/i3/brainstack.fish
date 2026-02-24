@@ -17,7 +17,7 @@ end
 
 function show_menu
     if not test -f $log_file
-	show_add
+        show_add
         return $status
     end
 
@@ -76,7 +76,7 @@ function insert_entry -a text
     set date_time (date +"%m-%d %H:%M")
     test -d $shot_dir; or mkdir -p $shot_dir
     set shot_path $shot_dir/$shot_name
-    scrot $shot_path
+    scrot -z $shot_path
     add_entry $date_time $text $shot_path
 end
 
