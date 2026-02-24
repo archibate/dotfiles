@@ -1,0 +1,4 @@
+*.db
+*.mmdb
+config.yaml
+sublink.txt

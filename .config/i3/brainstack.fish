@@ -17,8 +17,8 @@ end
 
 function show_menu
     if not test -f $log_file
-        notify-send "brainstack" "No entries found"
-        return 1
+	show_add
+        return $status
     end
 
     set entries (tac $log_file)

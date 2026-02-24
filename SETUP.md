@@ -38,6 +38,8 @@ This script will create symbolic links for the necessary 'dot' directories and f
 ### Required Dependencies
 
 ```bash
+sudo pacman -S xorg xorg-init
+sudo pacman -S git openssh
 sudo pacman -S i3-wm i3status
 sudo pacman -S sddm
 sudo pacman -S lxappearance
@@ -45,7 +47,7 @@ sudo pacman -S flameshot
 sudo pacman -S feh
 sudo pacman -S scrot
 sudo pacman -S thunar
-sudo pacman -S kitty wezterm alacritty
+sudo pacman -S kitty wezterm
 sudo pacman -S adwaita-icon-theme adwaita-cursor
 sudo pacman -S fcitx5 fcitx5-configtool fcitx5-rime
 sudo pacman -S pipewire
@@ -64,11 +66,11 @@ sudo pacman -S fish fisher
 sudo pacman -S autojump
 sudo pacman -S dunst
 sudo pacman -S lazygit
-sudo pacman -S tig
 sudo pacman -S fzf ripgrep
 sudo pacman -S fd bat
-sudo pacman -S exa
+sudo pacman -S exa bc
 sudo pacman -S python python-pip
+sudo pacman -S python-xlib
 sudo pacman -S py3status
 sudo pacman -S uv python-uv
 sudo pacman -S ruff stylua
@@ -78,6 +80,8 @@ sudo pacman -S direnv
 sudo pacman -S atuin
 sudo pacman -S zoxide
 sudo pacman -S gum glow
+sudo pacman -S clash
+
 paru -S i3lock-color
 paru -S warpd
 paru -S nitrogen
@@ -104,4 +108,11 @@ gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 # cp -r /tmp/alacritty-theme/themes/*.toml ~/.config/alacritty/themes
 
 # other fonts: https://github.com/lxgw/kose-font/releases
+```
+
+### Setup fish for the first time
+
+```fish
+cd ~/.config/fish
+fish setup.fish
 ```
