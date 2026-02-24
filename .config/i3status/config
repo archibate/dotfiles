@@ -37,24 +37,24 @@ order += "volume master"
 # }
 
 memory {
-        format = "<span foreground='#8aadf4'>󰍛</span> <span foreground='#8aadf4'>%used (%percentage_used)</span>"
+        format = "<span foreground='#8aadf4'>󰍛 </span><span foreground='#8aadf4'>%used (%percentage_used)</span>"
 }
 
 load {
-        format = "<span foreground='#eed49f'></span> <span foreground='#eed49f'>%1min</span> <span foreground='#f5a97f'>%5min</span> <span foreground='#ed8796'>%15min</span>"
+        format = "<span foreground='#eed49f'> </span><span foreground='#eed49f'>%1min</span> <span foreground='#f5a97f'>%5min</span> <span foreground='#ed8796'>%15min</span>"
 }
 
 disk "/" {
-        format = "<span foreground='#a6da95'></span> <span foreground='#a6da95'>%avail</span>"
+        format = "<span foreground='#a6da95'> </span><span foreground='#a6da95'>%avail</span>"
 }
 
 tztime local {
-        format = "<span foreground='#c6a0f6'></span> <span foreground='#c6a0f6'>%Y-%m-%d</span> <span foreground='#b7bdf8'>%H:%M:%S</span>"
+        format = "<span foreground='#c6a0f6'> </span><span foreground='#c6a0f6'>%Y-%m-%d</span> <span foreground='#b7bdf8'>%H:%M:%S</span>"
 }
 
 volume master {
-    format = "<span foreground='#8bd5ca'></span>  <span foreground='#8bd5ca'>%volume</span>"
-    format_muted = "<span foreground='#ed8796'></span>  <span foreground='#ed8796'>muted</span>"
+    format = "<span foreground='#8bd5ca'> </span><span foreground='#8bd5ca'>%volume</span>"
+    format_muted = "<span foreground='#ed8796'> </span><span foreground='#ed8796'>muted</span>"
     device = "default"
     mixer = "PulseAudio"
     mixer_idx = 0

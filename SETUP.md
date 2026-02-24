@@ -84,12 +84,16 @@ sudo pacman -S gum glow
 sudo pacman -S clash
 sudo pacman -S cargo
 sudo pacman -S chromium
+sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-extra noto-fonts-emoji
 sudo pacman -S ncdu
 sudo pacman -S pkgconf
 sudo pacman -S netcat lsof
 
-cargo install paru
+git clone https://aur.archlinux.org/paru.git ~/paru
+cd ~/paru
+makepkg -si
 
+paru -S catppuccin-gtk-theme-frappe catppuccin-gtk-theme-latte catppuccin-gtk-theme-mocha catppuccin-gtk-theme-macchiato
 paru -S warpd
 paru -S nvimpager
 paru -S projectdo
