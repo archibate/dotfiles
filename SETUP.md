@@ -67,6 +67,7 @@ sudo pacman -S yazi
 sudo pacman -S exiftool
 sudo pacman -S fish fisher
 sudo pacman -S autojump
+sudo pacman -S dex
 sudo pacman -S dunst
 sudo pacman -S lazygit
 sudo pacman -S fzf ripgrep
