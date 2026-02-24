@@ -91,12 +91,12 @@ sudo pacman -S netcat lsof
 cargo install paru
 
 paru -S warpd
-paru -S nitrogen
 paru -S nvimpager
 paru -S projectdo
-paru -S oscclip
 paru -S ttf-seto
-paru -S rofi-themes-collection
+paru -S nitrogen
+# paru -S oscclip
+# paru -S rofi-themes-collection
 
 # https://github.com/Reverier-Xu/Ori-fcitx5
 paru -S fcitx5-skin-ori-git
