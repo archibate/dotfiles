@@ -68,6 +68,7 @@ sudo pacman -S exiftool
 sudo pacman -S fish fisher
 sudo pacman -S autojump
 sudo pacman -S dex
+sudo pacman -S imagemagick
 sudo pacman -S dunst
 sudo pacman -S lazygit
 sudo pacman -S fzf ripgrep
@@ -102,6 +103,7 @@ lxappearance
 paru -S warpd
 paru -S nvimpager
 paru -S projectdo
+paru -S timg
 paru -S nitrogen
 paru -S ttf-seto
 # paru -S oscclip

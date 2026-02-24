@@ -3,7 +3,7 @@
 exec --no-startup-id dex --autostart --environment i3
 exec_always --no-startup-id xset -dpms
 exec_always --no-startup-id xset s off
-exec_always --no-startup-id nitrogen --restore
+exec_always --no-startup-id nitrogen --restore || feh --bg-scale ~/.config/i3/ina.png
 
 exec --no-startup-id fcitx5
 exec --no-startup-id flameshot
