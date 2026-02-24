@@ -18,7 +18,7 @@ link_item() {
 
 mkdir -p "$HOME/.config"
 
-for item in .bashrc .clang-format .gdbinit .gitconfig .inputrc .p10k.zsh .xprofile .zsh_aliases .zshrc .tmux.conf; do
+for item in .bashrc .clang-format .gdbinit .inputrc .p10k.zsh .xprofile .zsh_aliases .zshrc .tmux.conf; do
     link_item "$DOTFILES_DIR/$item" "$HOME/$item"
 done
 
