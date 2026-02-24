@@ -75,7 +75,7 @@ sudo pacman -S feh
 sudo pacman -S scrot
 sudo pacman -S thunar
 sudo pacman -S kitty wezterm
-sudo pacman -S adwaita-icon-theme adwaita-cursor
+sudo pacman -S adwaita-icon-theme adwaita-cursor breeze-icons
 sudo pacman -S fcitx5 fcitx5-configtool fcitx5-rime
 sudo pacman -S pipewire
 sudo pacman -S mplayer vlc
