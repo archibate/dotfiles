@@ -38,6 +38,7 @@ This script will create symbolic links for the necessary 'dot' directories and f
 ### Required Dependencies
 
 ```bash
+sudo pacman -S --needed base-devel
 sudo pacman -S xorg xorg-init
 sudo pacman -S git openssh
 sudo pacman -S i3-wm i3status
@@ -70,7 +71,7 @@ sudo pacman -S fzf ripgrep
 sudo pacman -S fd bat
 sudo pacman -S exa bc
 sudo pacman -S python python-pip
-sudo pacman -S python-xlib
+sudo pacman -S python-xlib python-requests
 sudo pacman -S py3status
 sudo pacman -S uv python-uv
 sudo pacman -S ruff stylua
@@ -81,8 +82,13 @@ sudo pacman -S atuin
 sudo pacman -S zoxide
 sudo pacman -S gum glow
 sudo pacman -S clash
+sudo pacman -S cargo
+sudo pacman -S chromium
+sudo pacman -S ncdu
+sudo pacman -S pkgconf
 
-paru -S i3lock-color
+cargo install paru
+
 paru -S warpd
 paru -S nitrogen
 paru -S nvimpager
