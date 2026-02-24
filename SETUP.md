@@ -41,6 +41,8 @@ This script will create symbolic links for the necessary 'dot' directories and f
 sudo pacman -S --needed base-devel
 sudo pacman -S xorg xorg-init
 sudo pacman -S git openssh
+sudo pacman -S bc jq
+sudo pacman -S netcat lsof
 sudo pacman -S i3-wm i3status
 sudo pacman -S sddm
 sudo pacman -S lxappearance
@@ -69,7 +71,7 @@ sudo pacman -S dunst
 sudo pacman -S lazygit
 sudo pacman -S fzf ripgrep
 sudo pacman -S fd bat
-sudo pacman -S exa bc
+sudo pacman -S exa
 sudo pacman -S python python-pip
 sudo pacman -S python-xlib python-requests
 sudo pacman -S py3status
@@ -87,7 +89,6 @@ sudo pacman -S chromium
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-extra noto-fonts-emoji
 sudo pacman -S ncdu
 sudo pacman -S pkgconf
-sudo pacman -S netcat lsof
 
 git clone https://aur.archlinux.org/paru.git ~/paru
 cd ~/paru
