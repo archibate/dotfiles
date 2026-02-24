@@ -94,31 +94,24 @@ cd ~/paru
 makepkg -si
 
 paru -S catppuccin-gtk-theme-frappe catppuccin-gtk-theme-latte catppuccin-gtk-theme-mocha catppuccin-gtk-theme-macchiato
+# then switch to catppuccin-macchiato-blue-standard+default in:
+lxappearance
+
 paru -S warpd
 paru -S nvimpager
 paru -S projectdo
-paru -S ttf-seto
 paru -S nitrogen
+paru -S ttf-seto
 # paru -S oscclip
 # paru -S rofi-themes-collection
 
-# https://github.com/Reverier-Xu/Ori-fcitx5
 paru -S fcitx5-skin-ori-git
-# https://github.com/Reverier-Xu/Fluent-fcitx5
-paru -S fcitx5-skin-fluentdark-git
-paru -S fcitx5-skin-fluentlight-git
-# then switch them in:
+paru -S fcitx5-skin-fluentdark-git fcitx5-skin-fluentlight-git
+# then switch to OriDark in:
 fcitx5-configtool
 
 # https://wiki.archlinux.org/title/GTK#Dark_theme_variant
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-
-# https://github.com/alacritty/alacritty-theme
-# git clone https://github.com/alacritty/alacritty-theme /tmp/alacritty-theme
-# mkdir -p ~/.config/alacritty/themes
-# cp -r /tmp/alacritty-theme/themes/*.toml ~/.config/alacritty/themes
-
-# other fonts: https://github.com/lxgw/kose-font/releases
 ```
 
 ### Setup fish for the first time
