@@ -1,9 +1,9 @@
 # vim: ft=i3config
 
-# font pango:JetBrainsMono Nerd Font Mono Medium 12
+font pango:JetBrainsMono Nerd Font Mono Medium 12
 # font pango:MonaspiceRn Nerd Font 12
 # font pango:NotoSerif Nerd Font Medium 12
-font pango:NotoSerif Nerd Font Medium 12
+# font pango:NotoSerif Nerd Font Medium 12
 # font pango:Aa扁雅楷 15
 # font pango:SetoFont 15
 # font pango:Xiaolai Regular 15
@@ -66,9 +66,9 @@ bar {
         inactive_workspace $base  $base     $text
         urgent_workspace   $base  $red      $crust
     }
-    # font pango:JetBrainsMono Nerd Font Mono Medium 12
+    font pango:JetBrainsMono Nerd Font Mono Medium 12
     # font pango:MonaspiceRn Nerd Font 12
     # font pango:NotoSerif Nerd Font Medium 12
     # font pango:XiaolaiMono Regular 15
-    font pango:SetoFont 15
+    # font pango:SetoFont 15
 }
