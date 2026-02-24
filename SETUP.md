@@ -58,6 +58,7 @@ sudo pacman -S mplayer vlc
 sudo pacman -S mpv mpv-mpris
 sudo pacman -S playerctl
 sudo pacman -S picom
+sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-extra noto-fonts-emoji
 sudo pacman -S nerd-fonts
 sudo pacman -S tmux
 sudo pacman -S zellij
@@ -88,7 +89,6 @@ sudo pacman -S gum glow
 sudo pacman -S clash
 sudo pacman -S cargo
 sudo pacman -S chromium
-sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-extra noto-fonts-emoji
 sudo pacman -S ncdu
 sudo pacman -S pkgconf
 
