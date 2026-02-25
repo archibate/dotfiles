@@ -65,7 +65,6 @@ Type these into your bare terminal:
 sudo pacman -S --needed base-devel
 sudo pacman -S xorg xorg-init
 sudo pacman -S git openssh
-sudo pacman -S bc jq
 sudo pacman -S netcat lsof
 sudo pacman -S i3-wm i3status
 sudo pacman -S sddm
@@ -98,7 +97,12 @@ sudo pacman -S dunst
 sudo pacman -S lazygit
 sudo pacman -S fzf ripgrep
 sudo pacman -S fd bat
-sudo pacman -S exa
+sudo pacman -S exa sd
+sudo pacman -S git-delta github-cli
+sudo pacman -S ast-grep hyperfine
+sudo pacman -S dust bottom
+sudo pacman -S tldr just
+sudo pacman -S bc jq yq
 sudo pacman -S python python-pip
 sudo pacman -S python-xlib python-requests
 sudo pacman -S py3status
