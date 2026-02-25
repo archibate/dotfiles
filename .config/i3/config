@@ -1,7 +1,9 @@
 set $mod Mod4
 
 include bindings
+include bindings.private
 include roles
 include appearances
 include autostart
+include autostart.private
 include gaps
