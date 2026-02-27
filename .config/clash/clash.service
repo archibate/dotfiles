@@ -1,0 +1,14 @@
+[Unit]
+Description=Clash Daemon
+After=network.target
+
+[Service]
+Type=simple
+User=bate
+WorkingDirectory=/home/bate/.config/clash
+ExecStart=clash -f /home/bate/.config/clash/config.yaml
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
