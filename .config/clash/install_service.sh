@@ -1,3 +1,3 @@
-sudo cp clash.service /etc/systemd/system/clash.service
-sudo systemctl daemon-reload
-sudo systemctl enable clash --now
+cp clash.service ~/.config/systemd/user/clash.service
+systemctl daemon-reload
+systemctl enable clash --now --user
