@@ -118,6 +118,8 @@ sudo pacman -S clash
 sudo pacman -S cargo
 sudo pacman -S chromium
 sudo pacman -S ncdu
+sudo pacman -S neomutt
+sudo pacman -S cronie
 sudo pacman -S pkgconf
 ```
 
