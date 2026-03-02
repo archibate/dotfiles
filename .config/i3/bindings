@@ -207,3 +207,4 @@ bindsym Print       exec flameshot full
 bindsym Shift+Print exec flameshot gui
 
 bindsym $mod+semicolon exec --no-startup-id warpd --hint
+bindsym $mod+Escape exec --no-startup-id warpd --normal
