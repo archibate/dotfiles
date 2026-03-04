@@ -3,7 +3,7 @@ indicator_color: #9ece6a
 indicator_size: 22
 
 cursor_color: #7aa2f7
-cursor_size: 22
+cursor_size: 16
 
 hint_chars: abcdefghijklmnopqrstuvwxyz
 hint_font: JetBrainsMono Nerd Font

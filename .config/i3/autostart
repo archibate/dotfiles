@@ -14,5 +14,3 @@ exec --no-startup-id dunst
 exec --no-startup-id picom --daemon
 
 exec --no-startup-id clash
-
-exec_always --no-startup-id test -f ~/.Xmodmap && xmodmap ~/.Xmodmap
