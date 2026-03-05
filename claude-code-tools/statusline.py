@@ -48,7 +48,7 @@ def get_git_info(cwd: str) -> tuple[str | None, str | None]:
                 modified += 1
 
         if staged == 0 and modified == 0:
-            status_str = "clean"
+            status_str = "~"
         else:
             parts = []
             if staged > 0:
@@ -105,7 +105,7 @@ def main():
     branch, status = get_git_info(cwd)
 
     # Build status line conditionally
-    parts = [f"folder: {shorten_path(cwd)}"]
+    parts = [shorten_path(cwd)]
 
     if branch:
         parts.append(branch)
@@ -115,7 +115,7 @@ def main():
     if model_name:
         parts.append(model_name)
 
-    if duration_ms:
+    if duration_ms and duration_ms >= 1000:
         parts.append(format_duration(duration_ms))
 
     if context_pct is not None:
