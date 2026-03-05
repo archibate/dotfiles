@@ -2,7 +2,7 @@
 
 echo '#!/usr/bin/bash
 
-if tty -s; then
+if [ -z "$CLAUDECODE" ]; then
     exec -a "$0" /usr/bin/snap "$@"
 else
     exec -a "$0" /usr/bin/snap "$@" | cat
