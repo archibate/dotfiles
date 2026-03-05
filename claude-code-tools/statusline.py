@@ -5,6 +5,7 @@ import json
 import os
 import subprocess
 import sys
+from pathlib import Path
 
 # Tokyo Night 256-color palette
 C = {
@@ -100,6 +101,57 @@ def shorten_path(path: str) -> str:
     return path
 
 
+def get_last_user_question(transcript_path: str | None, max_len: int = 40) -> str | None:
+    """Get last user message from transcript, truncated to max_len chars."""
+    if not transcript_path or not Path(transcript_path).exists():
+        return None
+    try:
+        # Read last few lines of transcript JSONL
+        result = subprocess.run(
+            ["tail", "-50", transcript_path],
+            capture_output=True,
+            text=True,
+            timeout=1,
+        )
+        if result.returncode != 0:
+            return None
+
+        lines = result.stdout.strip().split("\n")
+        for line in reversed(lines):
+            if not line:
+                continue
+            try:
+                entry = json.loads(line)
+                # Claude Code transcript format: {type: "user", message: {role: "user", content: ...}}
+                if entry.get("type") != "user":
+                    continue
+                msg = entry.get("message", {})
+                if msg.get("role") != "user":
+                    continue
+                content = msg.get("content", "")
+                # Handle list content format (tool_result items)
+                if isinstance(content, list):
+                    texts = []
+                    for item in content:
+                        if isinstance(item, dict) and item.get("type") == "text":
+                            texts.append(item.get("text", ""))
+                        # Skip tool_result items
+                    content = " ".join(texts)
+                # Skip empty or whitespace-only content
+                if not content or not content.strip():
+                    continue
+                # Truncate and clean
+                content = content.strip().replace("\n", " ")
+                if len(content) > max_len:
+                    content = content[:max_len - 1] + "…"
+                return content if content else None
+            except json.JSONDecodeError:
+                continue
+        return None
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return None
+
+
 def format_status(staged: int, modified: int) -> str | None:
     """Format git status with colors."""
     if staged == 0 and modified == 0:
@@ -120,6 +172,7 @@ def main():
         return
 
     cwd = data.get("cwd", os.getcwd())
+    transcript_path = data.get("transcript_path")
 
     model = data.get("model", {}) or {}
     model_name = model.get("display_name")
@@ -152,6 +205,10 @@ def main():
     if context_pct is not None and context_pct > 0:
         pct_str = f"{context_pct}%"
         parts.append(c(pct_str, context_color(context_pct)))
+
+    last_question = get_last_user_question(transcript_path)
+    if last_question:
+        parts.append(c(f"{last_question}", "comment"))
 
     print(f" {sep} ".join(parts))
 
