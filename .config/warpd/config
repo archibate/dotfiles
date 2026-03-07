@@ -3,7 +3,7 @@ indicator_color: #9ece6a
 indicator_size: 22
 
 cursor_color: #7aa2f7
-cursor_size: 22
+cursor_size: 16
 
 hint_chars: abcdefghijklmnopqrstuvwxyz
 hint_font: JetBrainsMono Nerd Font
@@ -24,9 +24,9 @@ max_speed: 3400
 decelerator_speed: 150
 
 scroll_speed: 300
-scroll_max_speed: 3000
-scroll_acceleration: 900
-scroll_deceleration: -3000
+scroll_max_speed: 2000
+scroll_acceleration: 500
+scroll_deceleration: -2000
 
 exit: esc M-;
 hint_exit: esc M-;
