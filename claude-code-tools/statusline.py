@@ -5,6 +5,8 @@ import json
 import os
 import subprocess
 import sys
+import time
+import urllib.request
 from pathlib import Path
 
 # Tokyo Night 256-color palette
@@ -33,6 +35,45 @@ def context_color(pct: int) -> str:
     elif pct <= 80:
         return "orange"
     return "red"
+
+
+def get_usage() -> tuple[int | None, int | None]:
+    """Fetch Claude usage utilization (5h%, 7d%) with 60s cache."""
+    CACHE_FILE = "/tmp/claude_usage_cache.json"
+    CACHE_AGE = 60
+
+    data = None
+    try:
+        cache_path = Path(CACHE_FILE)
+        if cache_path.exists():
+            age = time.time() - cache_path.stat().st_mtime
+            if age < CACHE_AGE:
+                data = json.loads(cache_path.read_text())
+    except Exception:
+        pass
+
+    if data is None:
+        try:
+            creds_path = Path.home() / ".claude" / ".credentials.json"
+            token = json.loads(creds_path.read_text())["claudeAiOauth"]["accessToken"]
+            req = urllib.request.Request(
+                "https://api.anthropic.com/api/oauth/usage",
+                headers={
+                    "Authorization": f"Bearer {token}",
+                    "anthropic-beta": "oauth-2025-04-20",
+                    "Content-Type": "application/json",
+                },
+            )
+            with urllib.request.urlopen(req, timeout=3) as resp:
+                data = json.loads(resp.read())
+            Path(CACHE_FILE).write_text(json.dumps(data))
+        except Exception:
+            return None, None
+
+    fh = data.get("five_hour", {}).get("utilization")
+    wk = data.get("seven_day", {}).get("utilization")
+    return (int(round(fh)) if fh is not None else None,
+            int(round(wk)) if wk is not None else None)
 
 
 def get_git_info(cwd: str) -> tuple[str | None, int, int]:
@@ -205,6 +246,12 @@ def main():
     if context_pct is not None and context_pct > 0:
         pct_str = f"{context_pct}%"
         parts.append(c(pct_str, context_color(context_pct)))
+
+    fh_pct, wk_pct = get_usage()
+    if fh_pct is not None or wk_pct is not None:
+        fh_str = c(f"{fh_pct}%", context_color(fh_pct)) if fh_pct is not None else "?"
+        wk_str = c(f"{wk_pct}%", context_color(wk_pct)) if wk_pct is not None else "?"
+        parts.append(f"5h:{fh_str} 7d:{wk_str}")
 
     last_question = get_last_user_question(transcript_path)
     if last_question:
