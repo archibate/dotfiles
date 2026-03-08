@@ -128,9 +128,9 @@ def format_duration(ms: int | None) -> str:
     seconds = total_seconds % 60
 
     if hours > 0:
-        return f"{hours}h{minutes:02d}m{seconds:02d}s"
+        return f"{hours}h {minutes:02d}m"
     if minutes > 0:
-        return f"{minutes}m{seconds:02d}s"
+        return f"{minutes}m {seconds:02d}s"
     return f"{seconds}s"
 
 
