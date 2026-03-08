@@ -34,4 +34,13 @@ hint_exit: esc M-;
 repeat_interval: 220
 
 buttons: m , .
-oneshot_buttons: ;space b n
+oneshot_buttons: space b n
+
+grid_nr: 3
+grid_nc: 4
+grid_up: k
+grid_left: h
+grid_down: j
+grid_right: l
+grid_keys: q w e r a s d f z x c v
+grid_exit: i
