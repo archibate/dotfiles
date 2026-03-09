@@ -7,6 +7,7 @@ import subprocess
 import sys
 import time
 import urllib.request
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 # Tokyo Night 256-color palette
@@ -37,8 +38,34 @@ def context_color(pct: int) -> str:
     return "red"
 
 
-def get_usage() -> tuple[int | None, int | None]:
-    """Fetch Claude usage utilization (5h%, 7d%) with 60s cache."""
+def usage_color(actual: int, expected: int | None) -> str:
+    """Color actual usage relative to expected: red if way over, orange if over, green otherwise."""
+    if expected is None:
+        return context_color(actual)
+    if actual > max(50, min(90, 2 * expected)):
+        return "red"
+    if actual > max(20, min(80, expected)):
+        return "orange"
+    return "green"
+
+
+def _expected_pct(resets_at_str: str | None, window: timedelta) -> int | None:
+    """Compute expected utilization % based on elapsed time in window."""
+    if not resets_at_str:
+        return None
+    try:
+        resets_at = datetime.fromisoformat(resets_at_str)
+        now = datetime.now(timezone.utc)
+        window_start = resets_at - window
+        elapsed = (now - window_start).total_seconds()
+        pct = elapsed / window.total_seconds() * 100
+        return int(round(max(0.0, min(100.0, pct))))
+    except Exception:
+        return None
+
+
+def get_usage() -> tuple[int | None, int | None, int | None, int | None]:
+    """Fetch Claude usage utilization (5h%, 5h_expected%, 7d%, 7d_expected%) with 60s cache."""
     CACHE_FILE = "/tmp/claude_usage_cache.json"
     CACHE_AGE = 60
 
@@ -68,12 +95,22 @@ def get_usage() -> tuple[int | None, int | None]:
                 data = json.loads(resp.read())
             Path(CACHE_FILE).write_text(json.dumps(data))
         except Exception:
-            return None, None
+            return None, None, None, None
 
-    fh = data.get("five_hour", {}).get("utilization")
-    wk = data.get("seven_day", {}).get("utilization")
-    return (int(round(fh)) if fh is not None else None,
-            int(round(wk)) if wk is not None else None)
+    fh_bucket = data.get("five_hour") or {}
+    wk_bucket = data.get("seven_day") or {}
+
+    fh = fh_bucket.get("utilization")
+    wk = wk_bucket.get("utilization")
+    fh_exp = _expected_pct(fh_bucket.get("resets_at"), timedelta(hours=5))
+    wk_exp = _expected_pct(wk_bucket.get("resets_at"), timedelta(days=7))
+
+    return (
+        int(round(fh)) if fh is not None else None,
+        fh_exp,
+        int(round(wk)) if wk is not None else None,
+        wk_exp,
+    )
 
 
 def get_git_info(cwd: str) -> tuple[str | None, int, int]:
@@ -247,11 +284,14 @@ def main():
         pct_str = f"{context_pct}%"
         parts.append(c(pct_str, context_color(context_pct)))
 
-    fh_pct, wk_pct = get_usage()
+    fh_pct, fh_exp, wk_pct, wk_exp = get_usage()
     if fh_pct is not None or wk_pct is not None:
-        fh_str = c(f"{fh_pct}%", context_color(fh_pct)) if fh_pct is not None else "?"
-        wk_str = c(f"{wk_pct}%", context_color(wk_pct)) if wk_pct is not None else "?"
-        parts.append(f"5h:{fh_str} 7d:{wk_str}")
+        def usage_str(actual: int | None, expected: int | None) -> str:
+            a = c(f"{actual}%", usage_color(actual, expected)) if actual is not None else "?"
+            if expected is not None:
+                return f"{a}/{expected}%"
+            return a
+        parts.append(f"5h:{usage_str(fh_pct, fh_exp)} 7d:{usage_str(wk_pct, wk_exp)}")
 
     last_question = get_last_user_question(transcript_path)
     if last_question:
