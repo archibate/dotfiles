@@ -67,15 +67,17 @@ def _expected_pct(resets_at_str: str | None, window: timedelta) -> int | None:
 def get_usage() -> tuple[int | None, int | None, int | None, int | None]:
     """Fetch Claude usage utilization (5h%, 5h_expected%, 7d%, 7d_expected%) with 60s cache."""
     CACHE_FILE = "/tmp/claude_usage_cache.json"
-    CACHE_AGE = 60
+    CACHE_AGE = 300
 
     data = None
+    cached_data = None
     try:
         cache_path = Path(CACHE_FILE)
         if cache_path.exists():
             age = time.time() - cache_path.stat().st_mtime
+            cached_data = json.loads(cache_path.read_text())
             if age < CACHE_AGE:
-                data = json.loads(cache_path.read_text())
+                data = cached_data
     except Exception:
         pass
 
@@ -91,11 +93,13 @@ def get_usage() -> tuple[int | None, int | None, int | None, int | None]:
                     "Content-Type": "application/json",
                 },
             )
-            with urllib.request.urlopen(req, timeout=3) as resp:
+            with urllib.request.urlopen(req, timeout=5) as resp:
                 data = json.loads(resp.read())
             Path(CACHE_FILE).write_text(json.dumps(data))
         except Exception:
-            return None, None, None, None
+            data = cached_data
+            if data is None:
+                return None, None, None, None
 
     fh_bucket = data.get("five_hour") or {}
     wk_bucket = data.get("seven_day") or {}
