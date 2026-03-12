@@ -2,7 +2,7 @@
 function claude
     set -l CLAUDE_TOOLS_DIR (path dirname (status --filename))
     if test -d $CLAUDE_TOOLS_DIR
-        set -lx EDITOR $CLAUDE_TOOLS_DIR/tmux_split_nvim.py
+        set -fx EDITOR $CLAUDE_TOOLS_DIR/tmux_split_nvim_block.py
     end
     $CLAUDE_TOOLS_DIR/claude_router.py $argv
 end
