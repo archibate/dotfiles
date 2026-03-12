@@ -1,5 +1,5 @@
 {
-    "claude": {},
+    "default": {},
     "glm": {
         "ANTHROPIC_AUTH_TOKEN": "YOUR_TOKEN_HERE",
         "ANTHROPIC_API_KEY": "",
