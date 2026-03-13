@@ -4,27 +4,27 @@
 # dependencies = []
 # ///
 """
-tmux_split_nvim_block - Open nvim in a new tmux split pane and wait for it to exit.
+tmux_popup_edit - Open nvim in a tmux popup window and wait for it to exit.
 
-A CLI wrapper that imitates nvim, but opens it in a new tmux split pane
+A CLI wrapper that imitates nvim, but opens it in a tmux popup window
 with all arguments forwarded to the actual nvim command. Blocks until
 nvim exits and returns its exit code.
 
 Usage:
-    tmux_split_nvim_block [nvim args...]
-    tmux_split_nvim_block -h|--help
-    tmux_split_nvim_block -v|--version
+    tmux_popup_edit [nvim args...]
+    tmux_popup_edit -h|--help
+    tmux_popup_edit -v|--version
 
 Options:
-    -h, --help      Show this help message
-    -v, --version   Show version
-    -H, --hsplit    Force horizontal split (panes side by side)
-    -V, --vsplit    Force vertical split (panes stacked)
+    --help          Show this help message
+    --version       Show version
+    -w, --width     Popup width (default: 80%)
+    -H, --height    Popup height (default: 90%)
 
 Examples:
-    tmux_split_nvim_block file.py
-    tmux_split_nvim_block -p ~/.config/nvim/init.lua
-    tmux_split_nvim_block -H server.py client.py
+    tmux_popup_edit file.py
+    tmux_popup_edit -p ~/.config/nvim/init.lua
+    tmux_popup_edit -w 100 -h 50 server.py
 """
 
 import os
@@ -57,24 +57,30 @@ def main() -> int:
     args = sys.argv[1:]
 
     # Handle our own flags
-    split_direction = None  # None = let tmux decide based on window size
+    width = "80%"
+    height = "90%"
 
     filtered_args = []
-    for arg in args:
-        if arg in ("-h", "--help"):
+    i = 0
+    while i < len(args):
+        arg = args[i]
+        if arg == "--help":
             print(__doc__)
             return 0
-        elif arg in ("-v", "--version"):
-            print(f"tmux_split_nvim_block {__version__}")
+        elif arg == "--version":
+            print(f"tmux_popup_edit {__version__}")
             return 0
-        elif arg in ("-H", "--hsplit"):
-            split_direction = "-h"
-        elif arg == "-V":
-            split_direction = "-v"
-        elif arg == "--vsplit":
-            split_direction = "-v"
+        elif arg in ("-w", "--width"):
+            if i + 1 < len(args):
+                width = args[i + 1]
+                i += 1
+        elif arg in ("-H", "--height"):
+            if i + 1 < len(args):
+                height = args[i + 1]
+                i += 1
         else:
             filtered_args.append(arg)
+        i += 1
 
     nvim_path = find_nvim()
 
@@ -85,7 +91,7 @@ def main() -> int:
     # Create a temporary file to signal completion and store exit code
     # Use a predictable pattern for cleanup
     temp_dir = Path(tempfile.gettempdir())
-    signal_file = temp_dir / f"tmux_nvim_block_{os.getpid()}"
+    signal_file = temp_dir / f"tmux_popup_edit_{os.getpid()}"
 
     # Build the nvim command with proper quoting
     nvim_cmd = shlex.join([nvim_path] + filtered_args)
@@ -93,20 +99,20 @@ def main() -> int:
     # Build a shell command that runs nvim, captures exit code, writes to file
     shell_cmd = f"{nvim_cmd}; echo $? > {shlex.quote(str(signal_file))}"
 
-    # Build the tmux split-window command
-    cmd = ["tmux", "split-window"]
+    # Build the tmux popup-window command
+    cmd = [
+        "tmux", "popup",
+        "-w", width,
+        "-h", height,
+        "-E",  # Don't close the popup until command exits
+        "bash", "-c", shell_cmd
+    ]
 
-    if split_direction:
-        cmd.append(split_direction)
-
-    cmd.extend(['bash', '-c'])
-    cmd.append(shell_cmd)
-
-    # Execute tmux split-window
+    # Execute tmux popup
     try:
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        print(f"error: tmux split-window failed: {e}", file=sys.stderr)
+        print(f"error: tmux popup failed: {e}", file=sys.stderr)
         return 1
 
     # Wait for the signal file to appear (nvim has exited)
