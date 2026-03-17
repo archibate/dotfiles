@@ -109,7 +109,7 @@ sudo pacman -S python-xlib python-requests
 sudo pacman -S py3status
 sudo pacman -S uv python-uv
 sudo pacman -S ruff stylua
-sudo pacman -S nodejs npm
+sudo pacman -S nodejs npm pnpm
 sudo pacman -S neovim python-pynvim
 sudo pacman -S direnv
 sudo pacman -S atuin
