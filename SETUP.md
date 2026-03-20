@@ -101,6 +101,7 @@ sudo pacman -S fd bat
 sudo pacman -S exa sd
 sudo pacman -S git-delta github-cli
 sudo pacman -S ast-grep hyperfine
+sudo pacman -S xh duckdb miller jc pueue
 sudo pacman -S dust bottom
 sudo pacman -S tldr just
 sudo pacman -S bc jq yq
@@ -109,7 +110,7 @@ sudo pacman -S python-xlib python-requests
 sudo pacman -S py3status
 sudo pacman -S uv python-uv
 sudo pacman -S ruff stylua
-sudo pacman -S nodejs npm
+sudo pacman -S nodejs npm pnpm
 sudo pacman -S neovim python-pynvim
 sudo pacman -S direnv
 sudo pacman -S atuin
