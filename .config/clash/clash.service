@@ -8,7 +8,8 @@ User=bate
 WorkingDirectory=/home/bate/.config/clash
 ExecStart=clash -f /home/bate/.config/clash/config.yaml
 
-Restart=on-failure
+Restart=always
+RestartSec=5
 
 [Install]
 WantedBy=default.target
