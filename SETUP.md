@@ -101,7 +101,7 @@ sudo pacman -S fd bat
 sudo pacman -S exa sd
 sudo pacman -S git-delta github-cli
 sudo pacman -S ast-grep hyperfine
-sudo pacman -S xh duckdb miller jc pueue
+sudo pacman -S xh duckdb miller jc pueue gron
 sudo pacman -S dust bottom
 sudo pacman -S tldr just
 sudo pacman -S bc jq yq
