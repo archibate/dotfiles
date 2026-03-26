@@ -52,7 +52,8 @@ bindsym $mod+q kill
 bindsym $mod+space exec --no-startup-id "rofi -show drun"
 bindsym $mod+shift+space exec --no-startup-id "rofi -show run"
 bindsym $mod+f exec --no-startup-id "rofi -show window"
-bindsym $mod+shift+f exec --no-startup-id "rofi -show filebrowser"
+bindsym $mod+g exec --no-startup-id "rofi -show filebrowser"
+# bindsym $mod+g exec --no-startup-id "rofi -show recursivebrowser"
 
 # change focus
 bindsym $mod+h focus left
