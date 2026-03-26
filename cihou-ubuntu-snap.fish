@@ -11,4 +11,5 @@ fi
 
 chmod +x ~/.local/bin/snap
 
-for x in (ls /snap/bin/); if string match "/snap/bin/*" (which $x); and string match "/usr/bin/snap" (readlink (which $x)); echo linking $x; ln -s snap ~/.local/bin/$x; end; end
+# for x in (ls /snap/bin/); if string match "/snap/bin/*" (which $x); and string match "/usr/bin/snap" (readlink (which $x)); echo linking $x; ln -s snap ~/.local/bin/$x; end; end
+for x in (ls /snap/bin/); if string match "/snap/bin/*" (which $x); echo linking $x; ln -s snap ~/.local/bin/$x; end; end
