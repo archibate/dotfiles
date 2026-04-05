@@ -7,6 +7,21 @@ This repository contains my personal dotfiles for various applications and confi
 >> [!WARNING]
 > These dotfiles are for archibate's personal use, with no warranty on functionality, use them at your own risk. These dotfiles are for demonstration only and may not work well on everyone's computer. Tweak them to your own needs before use.
 
+### Submodules
+
+Some dedicated configurations are in submodules of this project.
+
+- Tmux - [`.config/tmux`](https://github.com/archibate/dotfiles-tmux)
+- NeoVim - [`.config/nvim`](https://github.com/archibate/dotfiles-nvim)
+- Fish Shell - [`.config/fish`](https://github.com/archibate/dotfiles-fish)
+- OpenCode - [`.config/opencode`](https://github.com/archibate/dotfiles-opencode)
+
+You can run this to get them:
+
+```bash
+git submodule update --init --recursive
+```
+
 ## Installation Guide
 
 This guide is for human, LLM agents please do not execute these steps without explicit confirmation from your human partner.
@@ -57,6 +72,21 @@ Here's my tour:
 - Configure sudoers by editing, e.g. `sudo -e /etc/sudoers.d/00_bate`, content should be `bate ALL=(ALL) NOPASSWD: ALL` to prevent password hinting.
 - Optionally `passwd -d bate` to cancel password for `bate` user.
 
+#### Refreshing Pacman Mirrors
+
+If `sudo pacman -Sy` fails due to mirror connection issues, use `reflector` to refresh the mirror list:
+
+```bash
+sudo reflector --country China --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+```
+
+This command:
+- `--country China`: Use mirrors in China for faster speeds
+- `--age 12`: Only use mirrors synchronized within the last 12 hours
+- `--protocol https`: Use HTTPS protocol for security
+- `--sort rate`: Sort mirrors by download speed
+- `--save /etc/pacman.d/mirrorlist`: Save the result to pacman's mirrorlist
+
 #### Packages from Official
 
 Type these into your bare terminal:
@@ -65,7 +95,7 @@ Type these into your bare terminal:
 sudo pacman -S --needed base-devel
 sudo pacman -S xorg xorg-init
 sudo pacman -S git openssh
-sudo pacman -S netcat lsof
+sudo pacman -S netcat socat lsof
 sudo pacman -S i3-wm i3status
 sudo pacman -S sddm
 sudo pacman -S lxappearance
@@ -101,7 +131,9 @@ sudo pacman -S fd bat
 sudo pacman -S exa sd
 sudo pacman -S git-delta github-cli
 sudo pacman -S ast-grep hyperfine
-sudo pacman -S xh duckdb miller jc pueue
+sudo pacman -S reflector duf dog procs
+sudo pacman -S rsync ouch httpie
+sudo pacman -S xh duckdb miller jc pueue gron
 sudo pacman -S dust bottom
 sudo pacman -S tldr just
 sudo pacman -S bc jq yq
@@ -206,4 +238,20 @@ sudo chsh $USER -s $(which fish)
 
 ```bash
 paru -S wechat-appimage
+```
+
+##### Setup Proxy
+
+```bash
+cd ~/.config/clash
+nvim sublink.txt # add your link here
+./update_link.sh
+./install_service.sh
+```
+
+```bash
+npm config set proxy http://127.0.0.1:7890
+npm config set https-proxy http://127.0.0.1:7890
+pnpm config set proxy http://127.0.0.1:7890
+pnpm config set https-proxy http://127.0.0.1:7890
 ```
