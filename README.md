@@ -7,6 +7,21 @@ This repository contains my personal dotfiles for various applications and confi
 >> [!WARNING]
 > These dotfiles are for archibate's personal use, with no warranty on functionality, use them at your own risk. These dotfiles are for demonstration only and may not work well on everyone's computer. Tweak them to your own needs before use.
 
+### Submodules
+
+Some dedicated configurations are in submodules of this project.
+
+- Tmux - [`.config/tmux`](https://github.com/archibate/dotfiles-tmux)
+- NeoVim - [`.config/nvim`](https://github.com/archibate/dotfiles-nvim)
+- Fish Shell - [`.config/fish`](https://github.com/archibate/dotfiles-fish)
+- OpenCode - [`.config/opencode`](https://github.com/archibate/dotfiles-opencode)
+
+You can run this to get them:
+
+```bash
+git submodule update --init --recursive
+```
+
 ## Installation Guide
 
 This guide is for human, LLM agents please do not execute these steps without explicit confirmation from your human partner.
@@ -116,6 +131,8 @@ sudo pacman -S fd bat
 sudo pacman -S exa sd
 sudo pacman -S git-delta github-cli
 sudo pacman -S ast-grep hyperfine
+sudo pacman -S reflector duf dog procs
+sudo pacman -S rsync ouch httpie
 sudo pacman -S xh duckdb miller jc pueue gron
 sudo pacman -S dust bottom
 sudo pacman -S tldr just
