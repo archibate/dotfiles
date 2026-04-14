@@ -176,6 +176,7 @@ bindsym $mod+o exec "thunar"
 bindsym $mod+Shift+i exec --no-startup-id ~/.config/i3/inspect_xwindow.sh
 bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/pick_xcolor.sh
 bindsym $mod+Shift+u exec --no-startup-id ~/.config/i3/toggle_media.sh
+bindsym $mod+Shift+o exec --no-startup-id ~/.config/i3/nvim_insert.py
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
