@@ -124,7 +124,7 @@ sudo pacman -S autojump
 sudo pacman -S dex
 sudo pacman -S imagemagick
 sudo pacman -S dunst
-sudo pacman -S xdotool xclip xcolor
+sudo pacman -S xdotool wmctrl xclip xcolor
 sudo pacman -S lazygit
 sudo pacman -S fzf ripgrep
 sudo pacman -S fd bat
