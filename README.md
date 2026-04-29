@@ -155,6 +155,7 @@ sudo pacman -S ncdu
 sudo pacman -S neomutt
 sudo pacman -S cronie
 sudo pacman -S pkgconf
+sudo pacman -S gitleaks
 ```
 
 #### Packages from AUR
