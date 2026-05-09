@@ -6,6 +6,19 @@
 set -q TODOIST_TOKEN; or set -gx TODOIST_TOKEN (rg '^TODOIST_TOKEN=' ~/.config/fish/.env | string replace 'TODOIST_TOKEN=' '')
 
 set api https://api.todoist.com/api/v1
+set source_label i3   # auto-tag for every task added via this script
+
+function _quick_add -a text
+    # /tasks/quick parses date / priority / #project but ignores @label,
+    # so create first, then patch labels in a second call.
+    set body (jq -nc --arg t "$text" '{text:$t}')
+    set resp (_api POST /tasks/quick -d $body)
+    set tid (echo $resp | jq -r '.id // empty')
+    test -z "$tid"; and echo $resp; and return 1
+
+    set patch (jq -nc --arg l $source_label '{labels:[$l]}')
+    _api POST /tasks/$tid -d $patch
+end
 
 function _api -a method path
     curl -sS -X $method \
@@ -15,14 +28,18 @@ function _api -a method path
 end
 
 function add_task
-    set text (echo -n | rofi -dmenu -p todoist -mesg "支持自然语言: '买菜 tomorrow p1 #购物'" | string trim)
+    set text (echo -n | rofi -dmenu -p todoist -mesg "自然语言: '买菜 tomorrow p1 #购物' (auto-tagged @$source_label)" | string trim)
     test -z "$text"; and return
 
-    set body (jq -nc --arg t "$text" '{text:$t}')
-    set resp (_api POST /tasks/quick -d $body)
+    set resp (_quick_add $text)
     set content (echo $resp | jq -r '.content // empty')
     if test -n "$content"
-        notify-send "todoist" "✓ $content"
+        set due (echo $resp | jq -r '.due.string // empty')
+        set prio (echo $resp | jq -r '.priority // 1')   # API: 4=p1,3=p2,2=p3,1=p4
+        set summary "✓ $content @$source_label"
+        test -n "$due"; and set summary "$summary"\n"📅 $due"
+        test "$prio" != 1; and set summary "$summary  p"(math 5 - $prio)
+        notify-send "todoist" $summary
     else
         notify-send -u critical "todoist" (echo $resp | jq -r '.error // "unknown error"')
     end
@@ -44,10 +61,15 @@ function show_menu
     set typed (string split -f 2 \t -- $selected)
 
     if test "$idx" = -1
-        # Custom text → quick-add
-        set body (jq -nc --arg t "$typed" '{text:$t}')
-        set resp (_api POST /tasks/quick -d $body)
-        notify-send "todoist" "✓ "(echo $resp | jq -r '.content')
+        # Custom text → quick-add (auto-tagged)
+        set resp (_quick_add $typed)
+        set content (echo $resp | jq -r '.content // empty')
+        set due (echo $resp | jq -r '.due.string // empty')
+        set prio (echo $resp | jq -r '.priority // 1')
+        set summary "✓ $content @$source_label"
+        test -n "$due"; and set summary "$summary"\n"📅 $due"
+        test "$prio" != 1; and set summary "$summary  p"(math 5 - $prio)
+        notify-send "todoist" $summary
         return
     end
 
