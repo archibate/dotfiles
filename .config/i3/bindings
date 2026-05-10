@@ -166,9 +166,11 @@ bindsym $mod+Shift+a exec "lxappearance"
 bindsym $mod+Shift+x exec "xfce4-settings-manager"
 bindsym $mod+Shift+t exec "xfce4-taskmanager"
 
-bindsym $mod+n exec --no-startup-id ~/.config/i3/countup_timer.py rofi
+bindsym $mod+n exec --no-startup-id ~/.config/i3/nvim_insert.py
 bindsym $mod+p exec --no-startup-id ~/.config/i3/brainstack.fish menu
 bindsym $mod+y exec --no-startup-id ~/.config/i3/quickask.fish
+bindsym $mod+slash exec --no-startup-id ~/.config/i3/todoist.fish add
+bindsym $mod+Shift+slash exec --no-startup-id ~/.config/i3/todoist.fish menu
 
 bindsym $mod+b exec "chromium"
 bindsym $mod+o exec "thunar"
@@ -177,6 +179,7 @@ bindsym $mod+Shift+i exec --no-startup-id ~/.config/i3/inspect_xwindow.sh
 bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/pick_xcolor.sh
 bindsym $mod+Shift+u exec --no-startup-id ~/.config/i3/toggle_media.sh
 bindsym $mod+Shift+o exec --no-startup-id ~/.config/i3/nvim_insert.py
+# backward compatibility
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
