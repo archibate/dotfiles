@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Open a remote file:// URL: scp from the URL netloc, then xdg-open locally.
+# Netloc may be host, host:port, or user@host[:port] — passed through to scp.
+set -euo pipefail
+log=~/.cache/kitty-open-action.log
+tmp_dir=/tmp/kitty-open-remote-image
+mkdir -p "$(dirname "$log")" "$tmp_dir"
+url="$1"
+rest="${url#file://}"
+netloc="${rest%%/*}"
+path="/${rest#*/}"
+tmp="$tmp_dir/$(basename "$path")"
+{ echo "--- $(date) ---"; echo "url=$url netloc=$netloc path=$path"; } >>"$log"
+scp -q "${netloc}:${path}" "$tmp" >>"$log" 2>&1
+echo "scp_exit=$? tmp=$tmp" >>"$log"
+xdg-open "$tmp" >>"$log" 2>&1
+echo "xdg_exit=$?" >>"$log"
