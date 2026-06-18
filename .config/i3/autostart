@@ -1,5 +1,6 @@
 # vim: ft=i3config
 
+exec --no-startup-id systemctl --user import-environment DISPLAY XAUTHORITY; systemctl --user start wm-session.target
 exec --no-startup-id dex --autostart --environment i3
 exec_always --no-startup-id xset -dpms
 exec_always --no-startup-id xset s off
