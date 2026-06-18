@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=picom
-Comment=Compositor (custom override of system /etc/xdg/autostart/picom.desktop)
-Exec=picom --daemon
-Terminal=false
-NoDisplay=true
-X-GNOME-Autostart-enabled=true
