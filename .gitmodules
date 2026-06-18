@@ -1,12 +1,12 @@
 [submodule ".config/tmux"]
 	path = .config/tmux
-	url = https://github.com/archibate/dotfiles-tmux
+	url = git@github.com:archibate/dotfiles-tmux.git
 [submodule ".config/nvim"]
 	path = .config/nvim
-	url = https://github.com/archibate/dotfiles-nvim
+	url = git@github.com:archibate/dotfiles-nvim.git
 [submodule ".config/fish"]
 	path = .config/fish
-	url = https://github.com/archibate/dotfiles-fish
+	url = git@github.com:archibate/dotfiles-fish.git
 [submodule ".config/opencode"]
 	path = .config/opencode
-	url = https://github.com/archibate/dotfiles-opencode
+	url = git@github.com:archibate/dotfiles-opencode.git
