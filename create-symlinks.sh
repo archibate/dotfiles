@@ -22,8 +22,13 @@ for item in .bashrc .clang-format .gdbinit .inputrc .p10k.zsh .xprofile .zsh_ali
     link_item "$DOTFILES_DIR/$item" "$HOME/$item"
 done
 
-for dir in alacritty atuin clangd clash autostart dunst fish ghostty gtk-2.0 gtk-3.0 i3 i3status keynav kitty lazygit nvim nvimpager openmux paru polybar rofi tmux warpd wezterm yazi zellij picom.conf screenkey.json; do
+for dir in alacritty atuin clangd clash autostart dunst fish fontconfig ghostty gtk-2.0 gtk-3.0 gtk-4.0 i3 i3status keynav kitty lazygit nvim nvimpager openmux paru polybar rofi tmux warpd wezterm yazi zellij picom.conf screenkey.json; do
     link_item "$DOTFILES_DIR/.config/$dir" "$HOME/.config/$dir"
 done
+
+if command -v dconf >/dev/null 2>&1; then
+    echo "Load: dconf interface settings"
+    dconf load /org/gnome/desktop/interface/ < "$DOTFILES_DIR/.config/dconf/interface.ini"
+fi
 
 echo "Done! Symlinks created successfully."
