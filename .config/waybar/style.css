@@ -1,0 +1,54 @@
+/* waybar theme — Tokyo Night (enkia "Night" variant). */
+* {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 16px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: #1a1b26;
+    color: #c0caf5;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    color: #565f89;
+    background: transparent;
+    border-bottom: 2px solid transparent;
+}
+
+#workspaces button.active {
+    color: #7aa2f7;
+    border-bottom: 2px solid #7aa2f7;
+}
+
+#workspaces button.urgent {
+    color: #f7768e;
+}
+
+#window {
+    padding: 0 10px;
+    color: #7dcfff;
+}
+
+#disk,
+#pulseaudio,
+#cpu,
+#memory,
+#network,
+#clock,
+#tray {
+    padding: 0 10px;
+}
+
+#clock {
+    color: #e0af68;
+}
+
+#network.disconnected {
+    color: #f7768e;
+}
+
+#pulseaudio.muted {
+    color: #565f89;
+}

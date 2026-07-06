@@ -1,0 +1,62 @@
+// waybar for niri — mirrors 小彭老师's polybar layout & modules.
+// Icons are raw UTF-8 Nerd Font glyphs (codepoints verified present in JetBrainsMono Nerd Font).
+{
+    "layer": "top",
+    "position": "top",
+    "height": 28,
+    "spacing": 4,
+
+    "modules-left": ["niri/workspaces", "niri/window"],
+    "modules-center": [],
+    "modules-right": ["disk", "pulseaudio", "cpu", "memory", "network", "clock", "tray"],
+
+    "niri/workspaces": {
+        "format": "{index}"
+    },
+
+    "niri/window": {
+        "format": "{title}",
+        "max-length": 60,
+        "separate-outputs": true
+    },
+
+    "disk": {
+        "interval": 30,
+        "format": " {percentage_used}%",
+        "path": "/"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": " muted",
+        "format-icons": { "default": ["", "", ""] },
+        "on-click": "pavucontrol"
+    },
+
+    "cpu": {
+        "interval": 2,
+        "format": " {usage}%"
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": " {percentage}%"
+    },
+
+    "network": {
+        "format-wifi": " {signalStrength}%",
+        "format-ethernet": " {ifname}",
+        "format-disconnected": " off",
+        "tooltip-format": "{ifname}: {ipaddr}"
+    },
+
+    "clock": {
+        "format": " {:%Y-%m-%d %H:%M}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>"
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
+    }
+}

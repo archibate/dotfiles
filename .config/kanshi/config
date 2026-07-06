@@ -1,0 +1,13 @@
+# kanshi — dynamic monitor profiles for niri.
+# First matching profile wins, so the docked (more specific) profile goes first.
+
+# Xiaomi HDMI plugged in → drive it alone, laptop panel off.
+profile docked {
+    output "HDMI-A-1" enable
+    output "eDP-1" disable
+}
+
+# Xiaomi unplugged → fall back to the laptop panel.
+profile laptop {
+    output "eDP-1" enable
+}

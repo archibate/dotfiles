@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Picom
+# Shadows /etc/xdg/autostart/picom.desktop — picom is an X11 compositor,
+# useless under niri (Wayland composites natively). Hidden=true disables autostart.
+Hidden=true
