@@ -93,29 +93,31 @@ Type these into your bare terminal:
 
 ```bash
 sudo pacman -S --needed base-devel
-sudo pacman -S xorg xorg-init
+sudo pacman -S xorg-xwayland
 sudo pacman -S git openssh
 sudo pacman -S netcat socat lsof
-sudo pacman -S i3-wm i3status
+# niri (Wayland) desktop stack — replaces the old i3/X11 session:
+sudo pacman -S niri xwayland-satellite
+sudo pacman -S waybar mako fuzzel swaybg swaylock kanshi
+sudo pacman -S wl-clipboard brightnessctl
+sudo pacman -S xdg-desktop-portal-gnome xdg-desktop-portal-gtk
+sudo pacman -S qt5-wayland qt6-wayland
+# Old i3/X11 session — configs still live in this repo, install to run as fallback:
+# sudo pacman -S i3-wm i3status flameshot feh scrot picom rofi dunst
 sudo pacman -S sddm
 sudo pacman -S lxappearance
-sudo pacman -S flameshot
-sudo pacman -S feh
-sudo pacman -S scrot
 sudo pacman -S thunar
 sudo pacman -S kitty wezterm
 sudo pacman -S adwaita-icon-theme adwaita-cursor breeze-icons
 sudo pacman -S fcitx5 fcitx5-configtool fcitx5-rime
-sudo pacman -S pipewire
+sudo pacman -S pipewire wireplumber pipewire-pulse pavucontrol
 sudo pacman -S mplayer vlc
 sudo pacman -S mpv mpv-mpris
 sudo pacman -S playerctl
-sudo pacman -S picom
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-extra noto-fonts-emoji
 sudo pacman -S nerd-fonts
 sudo pacman -S tmux
 sudo pacman -S zellij
-sudo pacman -S rofi
 sudo pacman -S zenity
 sudo pacman -S yazi
 sudo pacman -S exiftool
@@ -123,8 +125,7 @@ sudo pacman -S fish fisher
 sudo pacman -S autojump
 sudo pacman -S dex
 sudo pacman -S imagemagick
-sudo pacman -S dunst
-sudo pacman -S xdotool wmctrl xclip xcolor
+sudo pacman -S xdotool ydotool wmctrl xcolor
 sudo pacman -S lazygit
 sudo pacman -S fzf ripgrep
 sudo pacman -S fd bat
@@ -172,11 +173,12 @@ makepkg -si
 ##### Installing Packages From AUR
 
 ```bash
+# wl-kbptr — Wayland keyboard mouse control (Mod+G); warpd stays X11-only for the i3 fallback:
 paru -S warpd
+paru -S wl-kbptr
 paru -S nvimpager
-paru -S projectdo
 paru -S timg
-paru -S nitrogen
+# paru -S nitrogen   # X11 wallpaper setter; niri uses swaybg instead
 ```
 
 ##### Installing Beautiful GTK Themes
@@ -206,6 +208,28 @@ fcitx5-configtool
 # https://wiki.archlinux.org/title/GTK#Dark_theme_variant
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 ```
+
+#### Display Manager (SDDM) & niri Session
+
+Enable SDDM and let it autologin straight into niri:
+
+```bash
+sudo systemctl enable sddm
+```
+
+Create `/etc/sddm.conf.d/autologin.conf` (this file is outside the repo):
+
+```ini
+[Autologin]
+User=bate
+Session=niri.desktop
+```
+
+niri auto-starts the desktop from `.config/niri/config.kdl` (waybar, mako, swaybg,
+kanshi, `dex --autostart`). Session env — proxy, `XMODIFIERS` for XWayland IME —
+lives in that file's `environment {}` block, replacing `.xprofile` under Wayland.
+Browser save/open dialogs use the GTK portal via `.config/xdg-desktop-portal`
+(both symlinked by `create-symlinks.sh`).
 
 #### Application Setup
 
@@ -257,3 +281,6 @@ npm config set https-proxy http://127.0.0.1:7890
 pnpm config set proxy http://127.0.0.1:7890
 pnpm config set https-proxy http://127.0.0.1:7890
 ```
+
+GUI apps launched by niri (e.g. chromium) read the proxy from the `environment {}`
+block in `.config/niri/config.kdl` — the Wayland replacement for `.xprofile`.

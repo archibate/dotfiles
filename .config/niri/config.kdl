@@ -18,9 +18,28 @@ input {
         // accel-speed 0.0
     }
     // i3 had focus_follows_mouse on by default; keep it.
-    focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse max-scroll-amount="100%"
+    // warp-mouse-to-focus mode="center-xy"
     // Super+mouse to move/resize floating windows (like i3 floating_modifier $mod).
     mod-key "Super"
+    // Switching to the same workspace by index twice will switch back to the previous workspace.
+    workspace-auto-back-and-forth
+}
+
+// Session environment (replaces .xprofile, which niri never sources).
+// Inherited by every app niri spawns, including XWayland children.
+environment {
+    // Proxy for GUI apps (chromium etc.); shell keeps its own via fish.
+    http_proxy "http://127.0.0.1:7890"
+    https_proxy "http://127.0.0.1:7890"
+    all_proxy "http://127.0.0.1:7890"
+    no_proxy "localhost,127.0.0.1,api.deepseek.com,api.ofox.io,142857.red"
+    // XWayland/X11 apps read this to reach fcitx's XIM server. Wayland-native
+    // apps use the text-input protocol and need no IME env var.
+    XMODIFIERS "@im=fcitx"
+    // Preferred terminal for XDG launchers.
+    TERMINAL "kitty"
+    EDITOR "nvim"
 }
 
 // Outputs are managed dynamically by kanshi (see ~/.config/kanshi/config):
@@ -30,6 +49,7 @@ input {
 layout {
     gaps 12
     center-focused-column "on-overflow"
+    always-center-single-column
 
     preset-column-widths {
         proportion 0.33333
@@ -40,11 +60,19 @@ layout {
 
     focus-ring {
         width 3
-        active-color "#7fc8ff"
+        active-gradient from="#7aa2f7" to="#bb9af7" angle=45
         inactive-color "#505050"
     }
     border {
         off
+    }
+
+    shadow {
+        on
+        softness 30
+        spread 5
+        offset x=0 y=5
+        color "#00000070"
     }
 }
 
@@ -61,10 +89,39 @@ animations {
     // off
 }
 
+// Rounded corners for all windows; clip content so corners actually round.
+window-rule {
+    geometry-corner-radius 8
+    clip-to-geometry true
+}
+
 // Firefox picture-in-picture floats (from default config).
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
+}
+
+// Indicate screencasted windows with red colors.
+window-rule {
+    match is-window-cast-target=true
+
+    focus-ring {
+        active-color "#f38ba8"
+        inactive-color "#7d0d2d"
+    }
+
+    border {
+        inactive-color "#7d0d2d"
+    }
+
+    shadow {
+        color "#7d0d2d70"
+    }
+
+    tab-indicator {
+        active-color "#f38ba8"
+        inactive-color "#7d0d2d"
+    }
 }
 
 // Blur behind windows (niri-native, replaces picom). Shows through transparent
@@ -109,26 +166,26 @@ binds {
     Mod+B { spawn "chromium"; }
     Mod+O { spawn "thunar"; }
     Super+Alt+L { spawn "swaylock"; }
-    // Your helper scripts lived under ~/.config/i3/ and may rely on X11 tools
-    // (xdotool/xclip) — review before re-enabling under Wayland:
-    // Mod+P { spawn "fish" "/home/bate/.config/i3/brainstack.fish" "menu"; }
-    // Mod+Y { spawn "fish" "/home/bate/.config/i3/quickask.fish"; }
+    // Keyboard-driven mouse warp (wl-kbptr, replaces warpd): tile-label then bisect.
+    Mod+Semicolon { spawn "wl-kbptr"; }
 
     // ---- Window / column ----
     Mod+D repeat=false { close-window; }        // i3: $mod+d = kill
 
     // Focus (i3 hjkl). j/k step within a column, then fall through to the
-    // next/prev workspace when there's no stacked window; h/l between columns.
-    Mod+H { focus-column-left; }
+    // next/prev workspace when there's no stacked window; h/l between columns,
+    // wrapping around at the left/right end.
+    Mod+H { focus-column-left-or-last; }
     Mod+J { focus-window-or-workspace-down; }
     Mod+K { focus-window-or-workspace-up; }
-    Mod+L { focus-column-right; }
-    Mod+Left  { focus-column-left; }
+    Mod+L { focus-column-right-or-first; }
+    Mod+Left  { focus-column-left-or-last; }
     Mod+Down  { focus-window-or-workspace-down; }
     Mod+Up    { focus-window-or-workspace-up; }
-    Mod+Right { focus-column-right; }
+    Mod+Right { focus-column-right-or-first; }
 
     // Move (i3 Shift+hjkl). j/k carry the window across the workspace edge too.
+    // (niri has no move-column wrap action, so h/l stop at the ends.)
     Mod+Shift+H { move-column-left; }
     Mod+Shift+J { move-window-down-or-to-workspace-down; }
     Mod+Shift+K { move-window-up-or-to-workspace-up; }
@@ -158,6 +215,7 @@ binds {
 
     // ---- Layout state ----
     Mod+Z { fullscreen-window; }                 // i3: $mod+z fullscreen
+    Mod+Shift+Z { toggle-windowed-fullscreen; }
     Mod+F { maximize-column; }
     Mod+W { toggle-window-floating; }            // i3: $mod+w floating toggle
     Mod+Shift+W { switch-focus-between-floating-and-tiling; }
@@ -225,4 +283,11 @@ binds {
     Ctrl+Alt+Delete { quit; }
     Mod+Shift+P { power-off-monitors; }
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+}
+
+// Force niri to render on the NVIDIA RTX 2080 (card1, PCI 01:00.0) instead of
+// Intel UHD 630. HDMI is wired to NVIDIA; rendering on Intel forced a cross-GPU
+// copy every frame -> ~40fps cap. See eglinfo before/after.
+debug {
+    render-drm-device "/dev/dri/by-path/pci-0000:01:00.0-render"
 }
