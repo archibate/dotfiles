@@ -35,6 +35,7 @@ window#waybar {
 #pulseaudio,
 #cpu,
 #memory,
+#battery,
 #network,
 #clock,
 #tray {
@@ -47,6 +48,24 @@ window#waybar {
 
 #network.disconnected {
     color: #f7768e;
+}
+
+#cpu.warning,
+#memory.warning,
+#disk.warning,
+#battery.warning {
+    color: #e0af68;
+}
+
+#cpu.critical,
+#memory.critical,
+#disk.critical,
+#battery.critical {
+    color: #f7768e;
+}
+
+#battery.charging {
+    color: #9ece6a;
 }
 
 #pulseaudio.muted {

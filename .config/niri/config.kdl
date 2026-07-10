@@ -18,7 +18,7 @@ input {
         // accel-speed 0.0
     }
     // i3 had focus_follows_mouse on by default; keep it.
-    focus-follows-mouse max-scroll-amount="100%"
+    focus-follows-mouse max-scroll-amount="34%"
     // warp-mouse-to-focus mode="center-xy"
     // Super+mouse to move/resize floating windows (like i3 floating_modifier $mod).
     mod-key "Super"
@@ -79,7 +79,7 @@ layout {
 // i3 has no client-side decorations; ask apps to drop CSD for clean borders.
 prefer-no-csd
 
-screenshot-path "~/flameshot/Screenshot-%Y%m%d_%H%M%S.png"
+screenshot-path "~/Pictures/screenshot/Screenshot-%Y%m%d_%H%M%S.png"
 
 hotkey-overlay {
     skip-at-startup
