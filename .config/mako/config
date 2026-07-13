@@ -1,0 +1,48 @@
+# Tokyo Night (Night variant), shared with Waybar.
+font=JetBrainsMono Nerd Font 12
+background-color=#1a1b26F2
+text-color=#c0caf5FF
+width=380
+height=160
+outer-margin=12
+margin=6
+padding=14
+border-size=1
+border-color=#7aa2f7FF
+border-radius=10
+progress-color=over #7aa2f780
+
+icons=1
+max-icon-size=48
+icon-location=left
+icon-border-radius=8
+
+markup=1
+format=<span size="small" foreground="#7aa2f7">%a</span>\n<b>%s</b>\n%b
+text-alignment=left
+default-timeout=7000
+ignore-timeout=1
+max-visible=5
+max-history=20
+layer=overlay
+anchor=top-right
+
+on-button-left=invoke-default-action
+on-button-middle=dismiss
+on-button-right=dismiss-all
+
+[urgency=low]
+text-color=#a9b1d6FF
+border-color=#565f89FF
+progress-color=over #565f8980
+default-timeout=4000
+
+[urgency=normal]
+border-color=#7aa2f7FF
+progress-color=over #7aa2f780
+default-timeout=7000
+
+[urgency=critical]
+border-color=#f7768eFF
+progress-color=over #f7768e80
+default-timeout=0

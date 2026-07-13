@@ -22,7 +22,7 @@ for item in .bashrc .clang-format .gdbinit .inputrc .p10k.zsh .xprofile .zsh_ali
     link_item "$DOTFILES_DIR/$item" "$HOME/$item"
 done
 
-for dir in alacritty atuin clangd clash autostart dunst fish fontconfig fuzzel ghostty gtk-2.0 gtk-3.0 gtk-4.0 i3 i3status kanshi keynav kitty lazygit niri nvim nvimpager opencode openmux paru polybar rofi tmux warpd waybar wezterm wl-kbptr xdg-desktop-portal yazi zellij picom.conf screenkey.json user-dirs.dirs user-dirs.locale; do
+for dir in alacritty atuin clangd clash autostart dunst fish fontconfig fuzzel ghostty gtk-2.0 gtk-3.0 gtk-4.0 i3 i3status kanshi keynav kitty lazygit mako niri nvim nvimpager opencode openmux paru polybar rofi tmux warpd waybar wezterm wl-kbptr xdg-desktop-portal yazi zellij picom.conf screenkey.json user-dirs.dirs user-dirs.locale; do
     link_item "$DOTFILES_DIR/.config/$dir" "$HOME/.config/$dir"
 done
 

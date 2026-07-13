@@ -37,6 +37,8 @@ environment {
     // XWayland/X11 apps read this to reach fcitx's XIM server. Wayland-native
     // apps use the text-input protocol and need no IME env var.
     XMODIFIERS "@im=fcitx"
+    GTK_IM_MODULE "fcitx"
+    QT_IM_MODULE "fcitx"
     // Preferred terminal for XDG launchers.
     TERMINAL "kitty"
     EDITOR "nvim"
