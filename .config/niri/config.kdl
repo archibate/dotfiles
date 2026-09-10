@@ -33,12 +33,12 @@ environment {
     http_proxy "http://127.0.0.1:7890"
     https_proxy "http://127.0.0.1:7890"
     all_proxy "http://127.0.0.1:7890"
-    no_proxy "localhost,127.0.0.1,api.deepseek.com,api.ofox.io,142857.red"
+    no_proxy "localhost,127.0.0.1,api.deepseek.com,api.ofox.io,142857.red,modelcontextprotocol.io"
     // XWayland/X11 apps read this to reach fcitx's XIM server. Wayland-native
     // apps use the text-input protocol and need no IME env var.
     XMODIFIERS "@im=fcitx"
-    GTK_IM_MODULE "fcitx"
     QT_IM_MODULE "fcitx"
+    // GTK_IM_MODULE "fcitx" // not required thanks to gtk native wayland support
     // Preferred terminal for XDG launchers.
     TERMINAL "kitty"
     EDITOR "nvim"
@@ -103,6 +103,13 @@ window-rule {
     open-floating true
 }
 
+// Qwen cua driver's cursor overlay is a transparent full-screen visual;
+// tiling it steals a column and intercepts the layout, so float it.
+window-rule {
+    match title=r#"^Cua\.AgentCursorOverlay"#
+    open-floating true
+}
+
 // Indicate screencasted windows with red colors.
 window-rule {
     match is-window-cast-target=true
@@ -147,6 +154,9 @@ spawn-at-startup "swaybg" "-i" "/home/bate/.config/i3/ina.png" "-m" "fill"
 spawn-at-startup "dex" "--autostart" "--environment" "niri"
 // kanshi applies the right monitor profile (docked vs laptop) on start & hotplug.
 spawn-at-startup "kanshi"
+
+// 语音输入靠它把转写结果敲进当前窗口
+spawn-at-startup "ydotoold"
 // niri 26.04 spawns xwayland-satellite itself and sets DISPLAY for children —
 // just having the binary installed is enough. No manual spawn / DISPLAY needed.
 
@@ -170,6 +180,8 @@ binds {
     Super+Alt+L { spawn "swaylock"; }
     // Keyboard-driven mouse warp (wl-kbptr, replaces warpd): tile-label then bisect.
     Mod+Semicolon { spawn "wl-kbptr"; }
+    // Voice input: press once to record, press again to transcribe and paste.
+    Menu repeat=false { spawn "/home/bate/Projects/qwen-input/qwen-input.py"; }
 
     // ---- Window / column ----
     Mod+D repeat=false { close-window; }        // i3: $mod+d = kill
@@ -269,11 +281,17 @@ binds {
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
     XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
-    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
-    XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
+    XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "--player=vlc" "play-pause"; }
+    XF86AudioNext        allow-when-locked=true { spawn "playerctl" "--player=vlc" "next"; }
+    XF86AudioPrev        allow-when-locked=true { spawn "playerctl" "--player=vlc" "previous"; }
     XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+    // Num Lock off: keypad 8/2 adjust volume, 4/6 change track, 5 toggles playback.
+    KP_Up    allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0"; }
+    KP_Down  allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
+    KP_Left  allow-when-locked=true { spawn "playerctl" "--player=vlc" "previous"; }
+    KP_Right allow-when-locked=true { spawn "playerctl" "--player=vlc" "next"; }
+    KP_Begin allow-when-locked=true { spawn "playerctl" "--player=vlc" "play-pause"; }
 
     // ---- Screenshots (niri built-in; replaces flameshot, which is X11) ----
     Print { screenshot-screen; }                 // i3: flameshot full
@@ -285,6 +303,8 @@ binds {
     Ctrl+Alt+Delete { quit; }
     Mod+Shift+P { power-off-monitors; }
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    // 打不出字但快捷键还灵，说明键卡在输入法那一段，这个键把 fcitx5 换掉
+    Mod+Shift+Escape allow-inhibiting=false { spawn "fcitx5" "-r"; }
 }
 
 // Force niri to render on the NVIDIA RTX 2080 (card1, PCI 01:00.0) instead of
@@ -292,4 +312,6 @@ binds {
 // copy every frame -> ~40fps cap. See eglinfo before/after.
 debug {
     render-drm-device "/dev/dri/by-path/pci-0000:01:00.0-render"
+    // Diagnostic for intermittent Chromium flashes on NVIDIA.
+    wait-for-frame-completion-before-queueing
 }

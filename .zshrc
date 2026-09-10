@@ -252,3 +252,5 @@ glibcver() {
 }
 
 [ ! -f ~/.config/tmux/scripts/tmux_aliases.sh ] || source ~/.config/tmux/scripts/tmux_aliases.sh
+
+
