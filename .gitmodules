@@ -7,6 +7,3 @@
 [submodule ".config/fish"]
 	path = .config/fish
 	url = git@github.com:archibate/dotfiles-fish.git
-[submodule ".config/opencode"]
-	path = .config/opencode
-	url = git@github.com:archibate/dotfiles-opencode.git

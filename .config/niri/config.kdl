@@ -103,6 +103,15 @@ window-rule {
     open-floating true
 }
 
+// Super+G scratch editor, matching the i3 nvim-insert popup.
+window-rule {
+    match app-id="^floating-editor$"
+    open-floating true
+    open-focused true
+    default-column-width { fixed 900; }
+    default-window-height { fixed 600; }
+}
+
 // Qwen cua driver's cursor overlay is a transparent full-screen visual;
 // tiling it steals a column and intercepts the layout, so float it.
 window-rule {
@@ -149,7 +158,7 @@ window-rule {
 // ---- Autostart (replaces i3 `autostart` file; X11 bits dropped) ----
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
-spawn-at-startup "swaybg" "-i" "/home/bate/.config/i3/ina.png" "-m" "fill"
+spawn-at-startup "waypaper" "--restore"
 // dex handles XDG autostart .desktop entries, same as under i3.
 spawn-at-startup "dex" "--autostart" "--environment" "niri"
 // kanshi applies the right monitor profile (docked vs laptop) on start & hotplug.
@@ -177,6 +186,7 @@ binds {
     Mod+Space  { spawn "fuzzel"; }              // i3: rofi drun. fuzzel is Wayland-native.
     Mod+B { spawn "chromium"; }
     Mod+O { spawn "thunar"; }
+    Mod+G repeat=false { spawn "uv" "run" "/home/bate/.config/niri/nvim_insert.py"; }
     Super+Alt+L { spawn "swaylock"; }
     // Keyboard-driven mouse warp (wl-kbptr, replaces warpd): tile-label then bisect.
     Mod+Semicolon { spawn "wl-kbptr"; }

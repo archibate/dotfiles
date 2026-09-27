@@ -14,7 +14,6 @@ Some dedicated configurations are in submodules of this project.
 - Tmux - [`.config/tmux`](https://github.com/archibate/dotfiles-tmux)
 - NeoVim - [`.config/nvim`](https://github.com/archibate/dotfiles-nvim)
 - Fish Shell - [`.config/fish`](https://github.com/archibate/dotfiles-fish)
-- OpenCode - [`.config/opencode`](https://github.com/archibate/dotfiles-opencode)
 
 You can run this to get them:
 

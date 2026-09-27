@@ -31,10 +31,13 @@ window#waybar {
     color: #7dcfff;
 }
 
+#mpris,
 #disk,
+#custom-earbuds,
 #pulseaudio,
 #cpu,
 #memory,
+#custom-gpu,
 #battery,
 #network,
 #clock,
@@ -52,6 +55,8 @@ window#waybar {
 
 #cpu.warning,
 #memory.warning,
+#custom-gpu.warning,
+#custom-earbuds.warning,
 #disk.warning,
 #battery.warning {
     color: #e0af68;
@@ -59,6 +64,8 @@ window#waybar {
 
 #cpu.critical,
 #memory.critical,
+#custom-gpu.critical,
+#custom-earbuds.critical,
 #disk.critical,
 #battery.critical {
     color: #f7768e;
@@ -70,4 +77,21 @@ window#waybar {
 
 #pulseaudio.muted {
     color: #565f89;
+}
+
+#mpris {
+    color: #bb9af7;
+}
+
+#mpris.paused,
+#mpris.stopped {
+    color: #565f89;
+}
+
+#custom-earbuds.off {
+    color: #565f89;
+}
+
+#custom-earbuds.connected {
+    color: #7aa2f7;
 }
