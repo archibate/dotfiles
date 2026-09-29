@@ -2,3 +2,8 @@
 *.mmdb
 config.yaml
 sublink.txt
+config.nodes.yaml
+config.subscription.yaml
+config.routing.json
+*.clash-man/
+__pycache__/

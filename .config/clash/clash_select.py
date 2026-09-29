@@ -4,7 +4,9 @@ import argparse
 import curses
 import json
 from dataclasses import dataclass
-from typing import Dict, List
+from pathlib import Path
+from typing import Dict, List, Optional
+from urllib.parse import urlsplit, urlunsplit
 
 import requests
 
@@ -72,7 +74,7 @@ def draw_ui(stdscr: curses.window, config: ControllerConfig) -> None:
         stdscr.clear()
         max_y, max_x = stdscr.getmaxyx()
         visible_rows = max(1, max_y - 6)
-        stdscr.addnstr(0, 0, f"Clash 控制: {config.base_url} (secret: {config.secret})", max_x - 1)
+        stdscr.addnstr(0, 0, f"Clash 控制: {config.base_url}", max_x - 1)
         stdscr.addnstr(1, 0, status_message, max_x - 1)
         stdscr.hline(2, 0, "-", max_x)
 
@@ -144,16 +146,55 @@ def draw_ui(stdscr: curses.window, config: ControllerConfig) -> None:
             status_message = "按上下键选择，Enter 切换，左右键切组，r 刷新，q 退出"
 
 
+DEFAULT_CONTROLLER = "http://127.0.0.1:9090"
+
+
+def resolve_config(
+    controller: Optional[str], secret: Optional[str], path: Path
+) -> ControllerConfig:
+    # Explicit connection options never borrow credentials from the local config.
+    if controller is not None or secret is not None:
+        return ControllerConfig(controller or DEFAULT_CONTROLLER, secret or "")
+
+    try:
+        import yaml
+    except ImportError:
+        raise ValueError("读取 config.yaml 需要 PyYAML（Arch: sudo pacman -S python-yaml）") from None
+    try:
+        settings = yaml.safe_load(path.read_text())
+    except (OSError, UnicodeError, yaml.YAMLError):
+        raise ValueError("无法读取有效的 config.yaml；也可显式指定 --controller 和 --secret") from None
+    if not isinstance(settings, dict):
+        raise ValueError("config.yaml 必须是 YAML 映射")
+    address = settings.get("external-controller", "127.0.0.1:9090")
+    token = settings.get("secret") or ""
+    if not isinstance(address, str) or not isinstance(token, str):
+        raise ValueError("external-controller 和 secret 必须是字符串")
+    try:
+        url = urlsplit(address if "://" in address else "http://" + address)
+        if url.scheme not in ("http", "https") or not url.hostname or url.username or url.password:
+            raise ValueError()
+        port = url.port
+        if url.hostname in ("0.0.0.0", "::", "*"):
+            url = url._replace(netloc="127.0.0.1" + (f":{port}" if port is not None else ""))
+    except ValueError:
+        raise ValueError("external-controller 地址无效") from None
+    return ControllerConfig(urlunsplit(url).rstrip("/"), token)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Clash 简易 TUI")
-    parser.add_argument("--controller", default="http://127.0.0.1:9090", help="Clash 控制器地址")
-    parser.add_argument("--secret", default="myssr", help="Clash 外部控制密码")
+    parser.add_argument("--controller", help="显式控制器地址；不自动复用本机密码")
+    parser.add_argument("--secret", help="显式控制器密码；可传空字符串")
     args = parser.parse_args()
-
-    config = ControllerConfig(base_url=args.controller, secret=args.secret)
+    try:
+        config = resolve_config(
+            args.controller, args.secret, Path(__file__).resolve().with_name("config.yaml")
+        )
+    except ValueError as error:
+        parser.error(str(error))
     curses.wrapper(draw_ui, config)
 
 
 if __name__ == "__main__":
     main()
-

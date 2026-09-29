@@ -18,9 +18,9 @@ python3 clash_select.py --controller http://localhost:9090 --secret mypassword
 ```
 
 ### Installing Dependencies
-The only external dependency is `requests`:
+The external dependencies are `requests` and `PyYAML` (the latter is needed only when loading local configuration):
 ```bash
-pip install requests
+uv run --with requests --with pyyaml clash_select.py
 ```
 Python 3.7+ is required for dataclasses support.
 
@@ -41,11 +41,9 @@ The application consists of a single file with the following key components:
 
 ## Configuration
 
-Default values (hardcoded):
-- Controller: `http://127.0.0.1:9090`
-- Secret: `myssr`
+With neither connection option supplied, read the controller and secret together from `config.yaml` beside the script. Wildcard bind addresses are connected to through loopback.
 
-These can be overridden with `--controller` and `--secret` command-line arguments.
+Explicit `--controller` or `--secret` bypasses file loading. The explicit-mode defaults are `http://127.0.0.1:9090` and an empty secret. A custom controller never implicitly receives local credentials. Credentials are not displayed in the TUI.
 
 ## UI Controls
 
@@ -64,6 +62,6 @@ The UI displays:
 
 - UI text is in Chinese (simplified)
 - Error handling is minimal; network failures may crash the application
-- No SSL certificate verification is performed
-- No configuration file support; only command-line arguments
-- No tests or logging infrastructure exist
+- HTTPS uses Requests default certificate verification
+- Malformed local configuration is reported without dumping its contents
+- Run configuration regressions with `python -m unittest discover -s . -p "test_*.py"` from this directory
