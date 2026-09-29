@@ -33,7 +33,7 @@ environment {
     http_proxy "http://127.0.0.1:7890"
     https_proxy "http://127.0.0.1:7890"
     all_proxy "http://127.0.0.1:7890"
-    no_proxy "localhost,127.0.0.1,api.deepseek.com,api.ofox.io,142857.red,modelcontextprotocol.io"
+    no_proxy "localhost,127.0.0.1,api.deepseek.com,142857.red,modelcontextprotocol.io"
     // XWayland/X11 apps read this to reach fcitx's XIM server. Wayland-native
     // apps use the text-input protocol and need no IME env var.
     XMODIFIERS "@im=fcitx"
