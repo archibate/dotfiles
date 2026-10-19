@@ -291,17 +291,17 @@ binds {
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
     XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
-    XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "--player=vlc" "play-pause"; }
-    XF86AudioNext        allow-when-locked=true { spawn "playerctl" "--player=vlc" "next"; }
-    XF86AudioPrev        allow-when-locked=true { spawn "playerctl" "--player=vlc" "previous"; }
+    XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "--player=cozy_music" "play-pause"; }
+    XF86AudioNext        allow-when-locked=true { spawn "playerctl" "--player=cozy_music" "next"; }
+    XF86AudioPrev        allow-when-locked=true { spawn "playerctl" "--player=cozy_music" "previous"; }
     XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
     // Num Lock off: keypad 8/2 adjust volume, 4/6 change track, 5 toggles playback.
     KP_Up    allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0"; }
     KP_Down  allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
-    KP_Left  allow-when-locked=true { spawn "playerctl" "--player=vlc" "previous"; }
-    KP_Right allow-when-locked=true { spawn "playerctl" "--player=vlc" "next"; }
-    KP_Begin allow-when-locked=true { spawn "playerctl" "--player=vlc" "play-pause"; }
+    KP_Left  allow-when-locked=true { spawn "playerctl" "--player=cozy_music" "previous"; }
+    KP_Right allow-when-locked=true { spawn "playerctl" "--player=cozy_music" "next"; }
+    KP_Begin allow-when-locked=true { spawn "playerctl" "--player=cozy_music" "play-pause"; }
 
     // ---- Screenshots (niri built-in; replaces flameshot, which is X11) ----
     Print { screenshot-screen; }                 // i3: flameshot full

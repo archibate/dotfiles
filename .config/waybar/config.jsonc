@@ -22,7 +22,7 @@
 
     // Click play/pause · middle previous · right next (built-in defaults).
     "mpris": {
-        "player": "vlc",
+        "player": "cozy_music",
         "format": "{status_icon} {dynamic}",
         "status-icons": { "playing": "", "paused": "", "stopped": "" },
         "dynamic-order": ["title", "artist"],
