@@ -33,7 +33,7 @@ environment {
     http_proxy "http://127.0.0.1:7890"
     https_proxy "http://127.0.0.1:7890"
     all_proxy "http://127.0.0.1:7890"
-    no_proxy "localhost,127.0.0.1,api.deepseek.com,142857.red,modelcontextprotocol.io"
+    no_proxy "localhost,127.0.0.1,.deepseek.com,.142857.red,modelcontextprotocol.io,.ofox.io"
     // XWayland/X11 apps read this to reach fcitx's XIM server. Wayland-native
     // apps use the text-input protocol and need no IME env var.
     XMODIFIERS "@im=fcitx"
@@ -313,7 +313,6 @@ binds {
     Ctrl+Alt+Delete { quit; }
     Mod+Shift+P { power-off-monitors; }
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
-    // 打不出字但快捷键还灵，说明键卡在输入法那一段，这个键把 fcitx5 换掉
     Mod+Shift+Escape allow-inhibiting=false { spawn "fcitx5" "-r"; }
 }
 
