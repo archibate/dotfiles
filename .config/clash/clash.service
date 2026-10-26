@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=bate
 WorkingDirectory=/home/bate/.config/clash
-ExecStart=clash -f /home/bate/.config/clash/config.yaml
+ExecStart=/usr/local/bin/clash -d /home/bate/.config/clash
 
 Restart=always
 RestartSec=5

@@ -267,11 +267,11 @@ paru -S wechat-appimage
 
 ##### Setup Proxy
 
+`config.yaml` 含订阅链接，不进 git。从 142857.red 的 `/etc/clash/config.yaml` 拷一份（两台机器同一份配置，只有 `secret` 不同），核心是 mihomo 官方二进制，放到 `/usr/local/bin/clash`：
+
 ```bash
 cd ~/.config/clash
-nvim sublink.txt # add your link here
-./update_link.sh
-./install_service.sh
+./install_service.sh   # mihomo -d ~/.config/clash，订阅由 mihomo 的 proxy-provider 每 6 小时自动更新
 ```
 
 ```bash
