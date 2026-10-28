@@ -8,7 +8,7 @@
 
     "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": ["mpris"],
-    "modules-right": ["disk", "custom/earbuds", "pulseaudio", "cpu", "memory", "custom/gpu", "battery", "network", "clock", "tray"],
+    "modules-right": ["disk", "custom/clash", "custom/earbuds", "pulseaudio", "cpu", "memory", "custom/gpu", "battery", "network", "clock", "tray"],
 
     "niri/workspaces": {
         "format": "{index}"
@@ -45,6 +45,15 @@
         "on-click": "pavucontrol"
     },
 
+    "custom/clash": {
+        "exec": "~/.config/waybar/scripts/clash-ping.sh",
+        "return-type": "json",
+        "interval": 10,
+        "tooltip": true,
+        "on-click": "systemctl --user restart clash",
+        "on-click-right": "~/.config/waybar/scripts/clash-refresh.sh"
+    },
+
     "custom/earbuds": {
         "exec": "earbuds-pc status",
         "return-type": "json",
@@ -55,7 +64,7 @@
 
     "cpu": {
         "interval": 1,
-        "format": " {usage:3}%",
+        "format": " {usage:3}%",
         "states": { "warning": 70, "critical": 90 },
         "tooltip-format": "CPU {usage}% · {load} load avg",
         "on-click": "kitty -e btm --process_default_sort cpu%"

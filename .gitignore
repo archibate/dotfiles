@@ -1,0 +1,19 @@
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+
+# Editor leftovers
+*~
+*.swp
+*.swo
+
+# Timestamped manual backups, e.g. config.jsonc.bak-20261028
+*.bak-[0-9]*
+
+# Runtime logs, e.g. clash/health.log (+ rotated health.log.1)
+*.log
+*.log.[0-9]*
+
+# OS cruft
+.DS_Store
+Thumbs.db

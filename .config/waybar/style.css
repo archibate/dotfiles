@@ -33,6 +33,7 @@ window#waybar {
 
 #mpris,
 #disk,
+#custom-clash,
 #custom-earbuds,
 #pulseaudio,
 #cpu,
@@ -49,6 +50,10 @@ window#waybar {
     color: #e0af68;
 }
 
+#custom-clash.ok {
+    color: #9ece6a;
+}
+
 #network.disconnected {
     color: #f7768e;
 }
@@ -56,6 +61,7 @@ window#waybar {
 #cpu.warning,
 #memory.warning,
 #custom-gpu.warning,
+#custom-clash.warning,
 #custom-earbuds.warning,
 #disk.warning,
 #battery.warning {
@@ -65,6 +71,7 @@ window#waybar {
 #cpu.critical,
 #memory.critical,
 #custom-gpu.critical,
+#custom-clash.critical,
 #custom-earbuds.critical,
 #disk.critical,
 #battery.critical {
