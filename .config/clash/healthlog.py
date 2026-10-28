@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Append a low-volume health snapshot of each proxy provider to health.log.
+"""Append a low-volume health snapshot of each proxy provider to health.log
+(or $HEALTHLOG_PATH).
 
 One line per provider per run: timestamp, provider, alive/total, best delay.
 Also logs the selected node of every url-test/fallback group, so a silently
@@ -7,6 +8,7 @@ dead provider (all alive=false) becomes visible without turning on debug logs.
 """
 
 import json
+import os
 import sys
 import time
 import urllib.request
@@ -14,7 +16,7 @@ from pathlib import Path
 
 HOME = Path(__file__).resolve().parent
 CONFIG = HOME / "config.yaml"
-LOG = HOME / "health.log"
+LOG = Path(os.environ.get("HEALTHLOG_PATH") or HOME / "health.log")
 MAX_BYTES = 1 << 20
 
 
@@ -65,6 +67,7 @@ def main():
         lines = snapshot()
     except Exception as exc:
         lines = [f"{time.strftime('%Y-%m-%dT%H:%M:%S')}\terror={type(exc).__name__}: {exc}"]
+    LOG.parent.mkdir(parents=True, exist_ok=True)
     if LOG.exists() and LOG.stat().st_size > MAX_BYTES:
         LOG.replace(LOG.with_suffix(".log.1"))
     with LOG.open("a") as fh:
