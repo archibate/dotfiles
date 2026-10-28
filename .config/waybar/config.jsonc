@@ -8,7 +8,7 @@
 
     "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": ["mpris"],
-    "modules-right": ["disk", "custom/clash", "custom/earbuds", "pulseaudio", "cpu", "memory", "custom/gpu", "battery", "network", "clock", "tray"],
+    "modules-right": ["custom/clash", "disk", "custom/earbuds", "pulseaudio", "cpu", "memory", "custom/gpu", "battery", "network", "clock", "tray"],
 
     "niri/workspaces": {
         "format": "{index}"
@@ -48,9 +48,10 @@
     "custom/clash": {
         "exec": "~/.config/waybar/scripts/clash-ping.sh",
         "return-type": "json",
-        "interval": 10,
+        "interval": 5,
+        "signal": 9,
         "tooltip": true,
-        "on-click": "systemctl --user restart clash",
+        "on-click": "~/.config/waybar/scripts/clash-restart.sh",
         "on-click-right": "~/.config/waybar/scripts/clash-refresh.sh"
     },
 

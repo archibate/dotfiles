@@ -54,6 +54,10 @@ window#waybar {
     color: #9ece6a;
 }
 
+#custom-clash.starting {
+    color: #7dcfff;
+}
+
 #network.disconnected {
     color: #f7768e;
 }
