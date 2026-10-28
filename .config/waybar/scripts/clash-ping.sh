@@ -27,6 +27,14 @@ read -r code secs < <(curl -s -o /dev/null -m 6 -x "$PROXY" \
 node=$(api GET '/proxies/Proxy%20Auto' 2>/dev/null | jq -r '.now // empty' 2>/dev/null)
 [ -z "${node:-}" ] && node="?"
 
+# Latest url-test delay of the picked node (the number Proxy Auto compares),
+# taken from the provider health check; 0 means dead or not yet tested.
+read -r delay tested < <(api GET /providers/proxies 2>/dev/null | jq -r --arg n "$node" \
+    '[.providers[].proxies[] | select(.name == $n) | .history[-1] // empty][0] // {}
+     | "\(.delay // 0) \(.time // "" | .[11:19])"' 2>/dev/null)
+delay=${delay:-0}
+tested=${tested:-?}
+
 ms=$(awk -v t="${secs:-0}" 'BEGIN{printf "%d", t*1000}')
 
 # Age of the running clash instance, so a just-restarted daemon that fails the
@@ -46,10 +54,15 @@ if [ "${code:-000}" != "204" ]; then
     else
         emit "$ICON down" "critical" "Clash 不可用（HTTP ${code:-000}）\n出口: $node\n左键重启 clash"
     fi
-elif [ "$ms" -lt 500 ]; then
-    emit "$ICON ${ms}ms $node" "ok" "gstatic 204 延迟 ${ms}ms\n出口: $node\n左键重启 · 右键刷新订阅"
-elif [ "$ms" -lt 1200 ]; then
-    emit "$ICON ${ms}ms $node" "warning" "gstatic 204 延迟 ${ms}ms\n出口: $node\n左键重启 · 右键刷新订阅"
 else
-    emit "$ICON ${ms}ms $node" "critical" "gstatic 204 延迟 ${ms}ms（偏高）\n出口: $node\n左键重启 · 右键刷新订阅"
+    tip="url-test 延迟 ${delay}ms（${tested} 测）\n端到端 gstatic 204 ${ms}ms\n出口: $node\n左键重启 · 右键刷新订阅"
+    if [ "$delay" -eq 0 ]; then
+        emit "$ICON ? $node" "warning" "$tip"
+    elif [ "$delay" -lt 500 ]; then
+        emit "$ICON ${delay}ms $node" "ok" "$tip"
+    elif [ "$delay" -lt 1200 ]; then
+        emit "$ICON ${delay}ms $node" "warning" "$tip"
+    else
+        emit "$ICON ${delay}ms $node" "critical" "$tip"
+    fi
 fi
