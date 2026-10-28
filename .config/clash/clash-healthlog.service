@@ -1,0 +1,7 @@
+[Unit]
+Description=Clash provider health snapshot
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/.config/clash
+ExecStart=/usr/bin/python3 %h/.config/clash/healthlog.py
