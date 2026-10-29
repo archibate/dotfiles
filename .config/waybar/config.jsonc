@@ -65,7 +65,7 @@
 
     "cpu": {
         "interval": 1,
-        "format": " {usage:3}%",
+        "format": " {usage:3}%",
         "states": { "warning": 70, "critical": 90 },
         "tooltip-format": "CPU {usage}% · {load} load avg",
         "on-click": "kitty -e btm --process_default_sort cpu%"
