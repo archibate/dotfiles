@@ -185,7 +185,7 @@ binds {
     Mod+Return { spawn "kitty"; }
     Mod+Space  { spawn "fuzzel"; }              // i3: rofi drun. fuzzel is Wayland-native.
     Mod+B { spawn "chromium"; }
-    Mod+O { spawn "thunar"; }
+    Mod+O { spawn "nautilus"; }
     Mod+G repeat=false { spawn "uv" "run" "/home/bate/.config/niri/nvim_insert.py"; }
     Super+Alt+L { spawn "swaylock"; }
     // Keyboard-driven mouse warp (wl-kbptr, replaces warpd): tile-label then bisect.
@@ -292,6 +292,7 @@ binds {
     XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
     XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "--player=cozy_music" "play-pause"; }
+    XF86AudioPause       allow-when-locked=true { spawn "playerctl" "--player=cozy_music" "pause"; }
     XF86AudioNext        allow-when-locked=true { spawn "playerctl" "--player=cozy_music" "next"; }
     XF86AudioPrev        allow-when-locked=true { spawn "playerctl" "--player=cozy_music" "previous"; }
     XF86MonBrightnessUp   allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
@@ -304,9 +305,9 @@ binds {
     KP_Begin allow-when-locked=true { spawn "playerctl" "--player=cozy_music" "play-pause"; }
 
     // ---- Screenshots (niri built-in; replaces flameshot, which is X11) ----
-    Print { screenshot-screen; }                 // i3: flameshot full
+    Alt+Print { screenshot-screen; }             // i3: flameshot full
     Shift+Print { screenshot; }                  // i3: flameshot gui (interactive region)
-    Alt+Print { screenshot-window; }
+    Print { screenshot-window; }
 
     // ---- Session ----
     Mod+Shift+E { quit; }                         // shows a confirm dialog
