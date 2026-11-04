@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Left click on the waybar clash module: restart clash, wait until the proxy
+# Middle click on the waybar clash module: restart clash, wait until the proxy
 # path is actually healthy again, then force waybar to re-probe (SIGRTMIN+9).
 # Without the wait waybar re-runs the ping script while clash is still warming
 # up, painting a misleading "down" that lingers until the next 10s tick.

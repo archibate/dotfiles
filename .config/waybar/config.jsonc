@@ -51,7 +51,8 @@
         "interval": 5,
         "signal": 9,
         "tooltip": true,
-        "on-click": "~/.config/waybar/scripts/clash-restart.sh",
+        "on-click": "~/.config/waybar/scripts/clash-kick.sh",
+        "on-click-middle": "~/.config/waybar/scripts/clash-restart.sh",
         "on-click-right": "~/.config/waybar/scripts/clash-refresh.sh"
     },
 
