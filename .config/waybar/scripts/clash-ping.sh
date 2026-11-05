@@ -39,12 +39,12 @@ leaf=${chain##* → }
 [ -z "${leaf:-}" ] && leaf="?"
 
 # Which airport the node belongs to, its latest test delay, and a short label.
-# Labels: "JP丨日本1" → "日本1", "🇯🇵 日本 01 - 1倍率" → "日本01".
+# Labels: "JP丨日本1" → "日本1", "🇯🇵 日本 01 - 1倍率" → "日本01", "🇯🇵日本专线02|BGP|流媒体" → "日本专线02".
 read -r label delay tested < <(api GET /providers/proxies 2>/dev/null | jq -r --arg n "$leaf" '
     [.providers | to_entries[] | .key as $prov | .value.proxies[] | select(.name == $n)
      | {prov: $prov, h: (.history[-1] // {})}][0] // {prov: "", h: {}}
-    | (if .prov == "airport" then "机场1" elif .prov == "airport2" then "机场2" else "" end) as $air
-    | ($n | sub(" *- *[0-9.]+倍率$"; "") | sub("^[A-Z]+丨"; "") | gsub("[\\x{1F1E6}-\\x{1F1FF}]"; "") | gsub(" "; "")) as $short
+    | (if .prov == "airport" then "机场1" elif .prov == "airport2" then "机场2" elif .prov == "airport3" then "机场3" else "" end) as $air
+    | ($n | sub(" *- *[0-9.]+倍率$"; "") | sub("^[A-Z]+丨"; "") | sub("\\|.*$"; "") | gsub("[\\x{1F1E6}-\\x{1F1FF}]"; "") | gsub(" "; "")) as $short
     | "\(if $air == "" then $short else $air + "_" + $short end) \(.h.delay // 0) \(.h.time // "" | .[11:19])"' 2>/dev/null)
 label=${label:-$leaf}
 label=${label/_/ }

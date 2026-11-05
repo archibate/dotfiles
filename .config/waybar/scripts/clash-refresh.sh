@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Refresh both clash proxy subscriptions (right click on the waybar module).
+# Refresh all clash proxy subscriptions (right click on the waybar module).
 set -uo pipefail
 
 CONFIG="$HOME/.config/clash/config.yaml"
@@ -10,7 +10,7 @@ notify() {
 }
 
 failed=""
-for p in airport airport2; do
+for p in airport airport2 airport3; do
     if ! curl -s -m 60 -o /dev/null -X PUT -H "Authorization: Bearer $secret" \
         "http://127.0.0.1:9090/providers/proxies/$p"; then
         failed="$failed $p"
@@ -21,4 +21,4 @@ if [ -n "$failed" ]; then
     notify "刷新失败:$failed"
     exit 1
 fi
-notify "两个订阅已刷新"
+notify "三个订阅已刷新"
