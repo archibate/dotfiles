@@ -34,6 +34,7 @@ window#waybar {
 #mpris,
 #disk,
 #custom-clash,
+#custom-clash-claude,
 #custom-earbuds,
 #pulseaudio,
 #cpu,
@@ -50,11 +51,13 @@ window#waybar {
     color: #e0af68;
 }
 
-#custom-clash.ok {
+#custom-clash.ok,
+#custom-clash-claude.ok {
     color: #9ece6a;
 }
 
-#custom-clash.starting {
+#custom-clash.starting,
+#custom-clash-claude.starting {
     color: #7dcfff;
 }
 
@@ -66,6 +69,7 @@ window#waybar {
 #memory.warning,
 #custom-gpu.warning,
 #custom-clash.warning,
+#custom-clash-claude.warning,
 #custom-earbuds.warning,
 #disk.warning,
 #battery.warning {
@@ -76,6 +80,7 @@ window#waybar {
 #memory.critical,
 #custom-gpu.critical,
 #custom-clash.critical,
+#custom-clash-claude.critical,
 #custom-earbuds.critical,
 #disk.critical,
 #battery.critical {
