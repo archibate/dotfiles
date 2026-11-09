@@ -145,6 +145,7 @@ sudo pacman -S ruff stylua
 sudo pacman -S nodejs npm pnpm
 sudo pacman -S neovim python-pynvim
 sudo pacman -S direnv
+sudo pacman -S nautilus
 sudo pacman -S atuin
 sudo pacman -S zoxide
 sudo pacman -S gum glow

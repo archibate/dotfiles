@@ -14,6 +14,9 @@ __pycache__/
 *.log
 *.log.[0-9]*
 
+# Runtime state
+.config/clash/health.state.json
+
 # OS cruft
 .DS_Store
 Thumbs.db

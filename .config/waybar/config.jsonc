@@ -8,7 +8,7 @@
 
     "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": ["mpris"],
-    "modules-right": ["custom/clash-claude", "custom/clash", "disk", "custom/earbuds", "pulseaudio", "cpu", "memory", "custom/gpu", "battery", "network", "clock", "tray"],
+    "modules-right": ["custom/claude-usage", "custom/clash-claude", "custom/clash", "disk", "custom/earbuds", "pulseaudio", "cpu", "memory", "custom/gpu", "battery", "network", "clock", "tray"],
 
     "niri/workspaces": {
         "format": "{index}"
@@ -66,6 +66,17 @@
         "on-click": "~/.config/waybar/scripts/clash-kick.sh",
         "on-click-middle": "~/.config/waybar/scripts/clash-restart.sh",
         "on-click-right": "~/.config/waybar/scripts/clash-refresh.sh"
+    },
+
+    // Claude quota "5h% 7d%", from claude-usage (5 min cache). Click refetches.
+    "custom/claude-usage": {
+        "exec": "~/.config/waybar/scripts/claude-usage.sh",
+        "return-type": "json",
+        "interval": 60,
+        "signal": 10,
+        "tooltip": true,
+        "exec-on-event": false, // --force signals the redraw after its fetch
+        "on-click": "~/.config/waybar/scripts/claude-usage.sh --force"
     },
 
     "custom/earbuds": {
