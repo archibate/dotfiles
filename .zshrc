@@ -252,9 +252,3 @@ glibcver() {
 }
 
 [ ! -f ~/.config/tmux/scripts/tmux_aliases.sh ] || source ~/.config/tmux/scripts/tmux_aliases.sh
-
-
-
-
-# Added by Antigravity CLI installer
-export PATH="/home/bate/.local/bin:$PATH"

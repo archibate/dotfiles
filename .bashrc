@@ -293,7 +293,3 @@ bind 'set show-all-if-unmodified on'
 
 [[ -f .bash_localrc ]] && source .bash_localrc
 true
-
-
-# Added by Antigravity CLI installer
-export PATH="/home/bate/.local/bin:$PATH"
