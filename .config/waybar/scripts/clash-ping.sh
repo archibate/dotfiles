@@ -88,9 +88,20 @@ if [ "${code:-000}" != "$EXPECT" ]; then
     fi
 else
     echo 0 > "$FAILS_FILE"
-    tip="url-test 延迟 ${delay}ms（${tested} 测）\n端到端 ${TEST_HOST} ${EXPECT} ${ms}ms\n${chain}\n${clicks}"
+    watch_key="discord"; [ "$NAME" = "claude" ] && watch_key="claude"
+    watch_loss=0; watch_note=""
+    if [ -r "/run/user/1000/clash-watch.json" ]; then
+        read -r watch_loss watch_fails watch_samples < <(jq -r --arg k "$watch_key" --argjson now "$(date +%s)" '
+            if ($now - (.ts // 0)) < 90 and .targets[$k] then
+                "\(.targets[$k].loss_pct // 0 | floor) \(.targets[$k].fails // 0) \(.targets[$k].samples // 0)"
+            else "0 0 0" end' /run/user/1000/clash-watch.json 2>/dev/null || echo "0 0 0")
+        [ "${watch_samples:-0}" -gt 0 ] && watch_note="\n近 3 分钟丢包 ${watch_loss}% (${watch_fails}/${watch_samples})"
+    fi
+    tip="url-test 延迟 ${delay}ms（${tested} 测）\n端到端 ${TEST_HOST} ${EXPECT} ${ms}ms${watch_note}\n${chain}\n${clicks}"
     if [ "$delay" -eq 0 ]; then
         emit "$ICON ${ms}ms $label" "warning" "$tip"
+    elif [ "${watch_loss:-0}" -ge 15 ]; then
+        emit "$ICON ${delay}ms $label 丢${watch_loss}%" "warning" "$tip"
     elif [ "$delay" -lt 500 ]; then
         emit "$ICON ${delay}ms $label" "ok" "$tip"
     elif [ "$delay" -lt 1200 ]; then

@@ -35,7 +35,7 @@ window#waybar {
 #disk,
 #custom-clash,
 #custom-clash-claude,
-#custom-claude-usage,
+#custom-kimi-usage,
 #custom-earbuds,
 #pulseaudio,
 #cpu,
@@ -71,7 +71,7 @@ window#waybar {
 #custom-gpu.warning,
 #custom-clash.warning,
 #custom-clash-claude.warning,
-#custom-claude-usage.warning,
+#custom-kimi-usage.warning,
 #custom-earbuds.warning,
 #disk.warning,
 #battery.warning {
@@ -83,7 +83,7 @@ window#waybar {
 #custom-gpu.critical,
 #custom-clash.critical,
 #custom-clash-claude.critical,
-#custom-claude-usage.critical,
+#custom-kimi-usage.critical,
 #custom-earbuds.critical,
 #disk.critical,
 #battery.critical {
@@ -108,7 +108,7 @@ window#waybar {
 }
 
 #custom-earbuds.off,
-#custom-claude-usage.stale {
+#custom-kimi-usage.stale {
     color: #565f89;
 }
 
